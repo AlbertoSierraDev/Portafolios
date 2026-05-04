@@ -47,7 +47,7 @@ export default function SkillsSection() {
   ];
 
   return (
-    <section className="relative min-h-screen px-6 py-16 md:px-10 md:py-20">
+    <section className="relative px-6 pb-8 pt-16 md:px-10 md:pb-10 md:pt-20">
       <div className="mx-auto max-w-[1500px]">
         <div className="mb-14 text-center">
           <p className="mb-3 text-[11px] uppercase tracking-[0.4em] text-cyan-300">

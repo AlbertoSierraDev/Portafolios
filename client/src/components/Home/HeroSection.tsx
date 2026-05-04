@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { HiOutlineArrowRight } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -58,24 +59,32 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-col gap-4 sm:flex-row">
-              <motion.button
+              <motion.div
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                className="flex items-center justify-center gap-2 rounded-md border border-cyan-200/60 bg-cyan-200 px-8 py-4 text-sm font-semibold uppercase tracking-[0.28em] text-[#0D0221] shadow-[0_0_24px_rgba(103,232,249,0.5)] transition"
               >
-                VER PROYECTOS
-                <HiOutlineArrowRight className="text-lg" />
-              </motion.button>
+                <Link
+                  to="/projects"
+                  className="flex items-center justify-center gap-2 rounded-md border border-cyan-200/60 bg-cyan-200 px-8 py-4 text-sm font-semibold uppercase tracking-[0.28em] text-[#0D0221] shadow-[0_0_24px_rgba(103,232,249,0.5)] transition"
+                >
+                  VER PROYECTOS
+                  <HiOutlineArrowRight className="text-lg" />
+                </Link>
+              </motion.div>
 
-              <motion.button
+              <motion.div
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                className="rounded-md border border-lime-400 px-8 py-4 text-sm font-semibold uppercase tracking-[0.28em] text-lime-400 shadow-[0_0_18px_rgba(163,230,53,0.25)] transition hover:bg-lime-400/10"
               >
-                CONTACTAR
-              </motion.button>
+                <Link
+                  to="/contact"
+                  className="flex items-center justify-center rounded-md border border-lime-400 px-8 py-4 text-sm font-semibold uppercase tracking-[0.28em] text-lime-400 shadow-[0_0_18px_rgba(163,230,53,0.25)] transition hover:bg-lime-400/10"
+                >
+                  CONTACTAR
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         </div>

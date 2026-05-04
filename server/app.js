@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const projectRoutes = require("./routes/projectRoutes");
 const adminProjectRoutes = require("./routes/adminProjectRoutes");
 const authRoutes = require("./routes/authRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const notFound = require("./middlewares/notFoundMiddleware");
 const errorHandler = require("./middlewares/errorMiddleware");
 
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 app.use("/api/projects", projectRoutes);
 app.use("/api/admin/projects", adminProjectRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

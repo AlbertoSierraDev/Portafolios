@@ -10,6 +10,7 @@ export default function ProjectDetail() {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadProject() {
@@ -85,10 +86,6 @@ export default function ProjectDetail() {
 
           <div className="p-6 md:p-10">
             <div className="mb-8">
-              <p className="mb-3 text-[11px] uppercase tracking-[0.4em] text-cyan-300">
-                Caso de estudio
-              </p>
-
               <h1 className="mb-4 text-4xl font-black uppercase text-white md:text-6xl">
                 {project.title}
               </h1>
@@ -135,62 +132,61 @@ export default function ProjectDetail() {
               )}
             </div>
 
-            <div className="grid gap-10 lg:grid-cols-[1.3fr_0.7fr]">
-              <div>
-                <h2 className="mb-4 text-2xl font-bold uppercase text-white">
+            <div className="grid gap-6 lg:grid-cols-4 lg:gap-5">
+              <div className="rounded-[28px] border border-cyan-300/20 bg-cyan-300/[0.06] p-6 shadow-[0_0_30px_rgba(34,211,238,0.08)] lg:col-span-4 lg:p-8">
+                <h2 className="mb-4 text-2xl font-bold uppercase text-white md:text-3xl">
                   Descripción
                 </h2>
-                <p className="text-sm leading-8 text-white/75 md:text-base">
+
+                <p className="text-sm leading-8 text-white/80 md:text-lg md:leading-9">
                   {project.fullDescription}
                 </p>
               </div>
 
-              <div className="space-y-10">
-                <div>
-                  <h2 className="mb-4 text-xl font-bold uppercase text-white">
-                    Retos
-                  </h2>
+              <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 lg:col-span-2 lg:p-6">
+                <h2 className="mb-4 text-xl font-bold uppercase text-white">
+                  Retos
+                </h2>
 
-                  {project.challenges.length > 0 ? (
-                    <ul className="space-y-3 text-sm leading-7 text-white/75">
-                      {project.challenges.map((challenge, index) => (
-                        <li
-                          key={`${challenge}-${index}`}
-                          className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
-                        >
-                          {challenge}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-white/50">
-                      No hay retos añadidos.
-                    </p>
-                  )}
-                </div>
+                {project.challenges.length > 0 ? (
+                  <ul className="space-y-3 text-sm leading-7 text-white/75">
+                    {project.challenges.map((challenge, index) => (
+                      <li
+                        key={`${challenge}-${index}`}
+                        className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
+                      >
+                        {challenge}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-white/50">
+                    No hay retos añadidos.
+                  </p>
+                )}
+              </div>
 
-                <div>
-                  <h2 className="mb-4 text-xl font-bold uppercase text-white">
-                    Soluciones
-                  </h2>
+              <div className="rounded-[24px] border border-cyan-300/10 bg-cyan-300/[0.05] p-5 lg:col-span-2 lg:p-6">
+                <h2 className="mb-4 text-xl font-bold uppercase text-white">
+                  Soluciones
+                </h2>
 
-                  {project.solutions.length > 0 ? (
-                    <ul className="space-y-3 text-sm leading-7 text-white/75">
-                      {project.solutions.map((solution, index) => (
-                        <li
-                          key={`${solution}-${index}`}
-                          className="rounded-2xl border border-cyan-300/10 bg-cyan-300/[0.05] px-4 py-3"
-                        >
-                          {solution}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-white/50">
-                      No hay soluciones añadidas.
-                    </p>
-                  )}
-                </div>
+                {project.solutions.length > 0 ? (
+                  <ul className="space-y-3 text-sm leading-7 text-white/75">
+                    {project.solutions.map((solution, index) => (
+                      <li
+                        key={`${solution}-${index}`}
+                        className="rounded-2xl border border-cyan-300/10 bg-cyan-300/[0.05] px-4 py-3"
+                      >
+                        {solution}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-white/50">
+                    No hay soluciones añadidas.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -202,16 +198,18 @@ export default function ProjectDetail() {
 
                 <div className="grid gap-4 md:grid-cols-2">
                   {project.gallery.map((image, index) => (
-                    <div
+                    <button
                       key={`${image}-${index}`}
-                      className="overflow-hidden rounded-[24px] border border-cyan-300/10 bg-white/[0.03]"
+                      type="button"
+                      onClick={() => setSelectedImage(image)}
+                      className="group overflow-hidden rounded-[24px] border border-cyan-300/10 bg-white/[0.03] text-left transition-all duration-300 hover:scale-[1.02] hover:border-cyan-300/30 hover:shadow-[0_0_25px_rgba(34,211,238,0.12)]"
                     >
                       <img
                         src={image}
                         alt={`${project.title} ${index + 1}`}
-                        className="h-72 w-full object-cover"
+                        className="h-72 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -219,6 +217,28 @@ export default function ProjectDetail() {
           </div>
         </div>
       </div>
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 backdrop-blur-sm"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedImage(null)}
+            className="absolute right-6 top-6 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/20"
+          >
+            Cerrar
+          </button>
+
+          <img
+            src={selectedImage}
+            alt="Imagen ampliada del proyecto"
+            onClick={(event) => event.stopPropagation()}
+            className="max-h-[85vh] max-w-[95vw] rounded-[28px] border border-cyan-300/20 object-contain shadow-[0_0_45px_rgba(34,211,238,0.18)]"
+          />
+        </div>
+      )}
     </section>
   );
 }

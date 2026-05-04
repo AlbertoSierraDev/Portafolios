@@ -1,16 +1,63 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+import MainLayout from "./components/MainLayout";
+import AdminLayout from "./components/AdminLayout";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
+import Contact from "./pages/Contact";
+
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminProjects from "./pages/admin/AdminProjects";
+import AdminProjectForm from "./pages/admin/AdminProjectForm";
+import AdminMessages from "./pages/admin/AdminMessages";
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="projects/:slug" element={<ProjectDetail />} />
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/contact" element={<Contact />} />
+      </Route>
+
+      <Route element={<AdminLayout />}>
+        <Route path="/login" element={<AdminLogin />} />
+
+        <Route
+          path="/admin/projects"
+          element={
+            <ProtectedRoute>
+              <AdminProjects />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/projects/new"
+          element={
+            <ProtectedRoute>
+              <AdminProjectForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/projects/:id/edit"
+          element={
+            <ProtectedRoute>
+              <AdminProjectForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/messages"
+          element={
+            <ProtectedRoute>
+              <AdminMessages />
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );

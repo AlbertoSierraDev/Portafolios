@@ -32,11 +32,8 @@ export default function Navbar() {
           <NavLink to="/projects" className={navLinkClass}>
             Proyectos
           </NavLink>
-          <NavLink to="/about" className={navLinkClass}>
-            About
-          </NavLink>
           <NavLink to="/contact" className={navLinkClass}>
-            Contact
+            Contacto
           </NavLink>
         </nav>
 
