@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { HiOutlineArrowRight, HiOutlinePhoto } from "react-icons/hi2";
-import { getProjects } from "../../../api/projects";
+import { getProjects } from "../../api/projects";
 import type { Project } from "../../types/project";
 
 const accentStyles = [

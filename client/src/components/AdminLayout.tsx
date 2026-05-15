@@ -9,7 +9,7 @@ import {
   HiOutlinePlus,
 } from "react-icons/hi2";
 import BackgroundLayout from "./BackgroundLayout";
-import { logoutAdmin } from "../../api/auth";
+import { logoutAdmin } from "../api/auth";
 
 const navItems = [
   {

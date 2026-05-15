@@ -17,10 +17,11 @@ const loginAdmin = async (req, res) => {
   }
 
   const token = generateToken();
+  const isProduction = process.env.NODE_ENV === "production";
 
   res.cookie("admin_token", token, {
     httpOnly: true,
-    secure: false,
+    secure: isProduction,
     sameSite: "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
@@ -34,9 +35,13 @@ const loginAdmin = async (req, res) => {
   });
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const logoutAdmin = async (req, res) => {
   res.cookie("admin_token", "", {
     httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
     expires: new Date(0),
   });
 

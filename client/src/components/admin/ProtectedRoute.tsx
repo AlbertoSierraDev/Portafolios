@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { getMeAdmin } from "../../../api/auth";
+import { getMeAdmin } from "../../api/auth";
 
 type ProtectedRouteProps = {
   children: React.ReactNode;

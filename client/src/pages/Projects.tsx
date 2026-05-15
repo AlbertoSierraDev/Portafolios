@@ -3,7 +3,7 @@ import { HiOutlineArrowUpRight } from "react-icons/hi2";
 import { FaGithub } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProjects } from "../../api/projects";
+import { getProjects } from "../api/projects";
 import type { Project } from "../types/project";
 
 export default function Projects() {

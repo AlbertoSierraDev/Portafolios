@@ -11,7 +11,7 @@ import {
   getContactMessages,
   markContactMessageAsRead,
   type ContactMessage,
-} from "../../../api/contact";
+} from "../../api/contact";
 
 export default function AdminMessages() {
   const [messages, setMessages] = useState<ContactMessage[]>([]);

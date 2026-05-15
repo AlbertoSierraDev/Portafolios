@@ -1,6 +1,6 @@
-import type { Project } from "../src/types/project";
+import type { Project } from "../types/project";
 
-const API_URL = "http://localhost:5000/api/admin/projects";
+const API_URL = "/api/admin/projects";
 
 export type ProjectPayload = {
   title: string;

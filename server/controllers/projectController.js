@@ -1,4 +1,5 @@
 const Project = require("../models/Project");
+const { validateProjectPayload } = require("../validators/projectValidator");
 
 const getProjects = async (req, res, next) => {
   try {
@@ -25,12 +26,21 @@ const getProjectBySlug = async (req, res, next) => {
 
 const createProject = async (req, res, next) => {
   try {
+    const validation = validateProjectPayload(req.body);
+
+    if (!validation.isValid) {
+      return res.status(400).json({
+        message: "Datos de proyecto inválidos",
+        errors: validation.errors,
+      });
+    }
+
     const { slug } = req.body;
 
     const existingProject = await Project.findOne({ slug });
 
     if (existingProject) {
-      return res.status(400).json({ message: "Ese slug ya existe" });
+      return res.status(409).json({ message: "Ese slug ya existe" });
     }
 
     const project = await Project.create(req.body);
@@ -43,6 +53,15 @@ const createProject = async (req, res, next) => {
 
 const updateProject = async (req, res, next) => {
   try {
+    const validation = validateProjectPayload(req.body);
+
+    if (!validation.isValid) {
+      return res.status(400).json({
+        message: "Datos de proyecto inválidos",
+        errors: validation.errors,
+      });
+    }
+
     const project = await Project.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,

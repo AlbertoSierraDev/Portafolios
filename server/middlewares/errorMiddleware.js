@@ -1,30 +1,33 @@
 const errorHandler = (err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
   console.error(err);
 
   let statusCode = err.statusCode || err.status || 500;
   let message = err.message || "Error interno del servidor";
 
-  // Error de validación de Mongoose
   if (err.name === "ValidationError") {
     statusCode = 400;
-    message = Object.values(err.errors)
-      .map((error) => error.message)
-      .join(", ");
+    message = "Error de validación";
   }
 
-  // ID de Mongo inválido
   if (err.name === "CastError") {
     statusCode = 400;
     message = "ID no válido";
   }
 
-  // Error de clave duplicada de Mongo/Mongoose
   if (err.code === 11000) {
     statusCode = 409;
     const duplicatedField = Object.keys(err.keyValue || {})[0];
     message = duplicatedField
-      ? `El valor de "${duplicatedField}" ya existe`
-      : "Ya existe un valor duplicado";
+      ? `Ya existe un recurso con ese ${duplicatedField}`
+      : "El recurso ya existe";
+  }
+
+  if (statusCode === 500 && process.env.NODE_ENV === "production") {
+    message = "Error interno del servidor";
   }
 
   res.status(statusCode).json({

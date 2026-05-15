@@ -35,9 +35,7 @@ async function verifyTurnstile(req, res, next) {
 
     return next();
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al verificar el captcha.",
-    });
+    return next(error);
   }
 }
 

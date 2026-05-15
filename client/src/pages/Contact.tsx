@@ -10,7 +10,7 @@ import {
   HiOutlineShieldCheck,
 } from "react-icons/hi2";
 import { FaLinkedin } from "react-icons/fa";
-import { sendContactMessage } from "../../api/contact";
+import { sendContactMessage } from "../api/contact";
 
 const EMAIL = "alberto.s.perez.asp@gmail.com";
 const LINKEDIN_URL =

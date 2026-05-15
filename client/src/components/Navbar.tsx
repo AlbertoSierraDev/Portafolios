@@ -21,7 +21,7 @@ export default function Navbar() {
           </span>
 
           <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white transition duration-300 group-hover:text-cyan-300 ">
-            ALBERTOSIERRA.DEV
+            ALBERTOSIERRA.ES
           </span>
         </Link>
 

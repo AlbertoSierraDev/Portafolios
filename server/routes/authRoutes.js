@@ -1,4 +1,5 @@
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 const {
   loginAdmin,
   logoutAdmin,
@@ -8,7 +9,17 @@ const { protectAdmin } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.post("/login", loginAdmin);
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    message: "Demasiados intentos de login. Inténtalo más tarde.",
+  },
+});
+
+router.post("/login", loginLimiter, loginAdmin);
 router.post("/logout", logoutAdmin);
 router.get("/me", protectAdmin, getMeAdmin);
 

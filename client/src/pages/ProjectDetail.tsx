@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineArrowUpRight } from "react-icons/hi2";
-import { getProjectBySlug } from "../../api/projects";
+import { getProjectBySlug } from "../api/projects";
 import type { Project } from "../types/project";
 
 export default function ProjectDetail() {

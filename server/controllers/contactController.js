@@ -1,6 +1,6 @@
 const ContactMessage = require("../models/ContactMessage");
 
-async function createContactMessage(req, res) {
+async function createContactMessage(req, res, next) {
   try {
     const { name, email, subject, message } = req.body;
 
@@ -30,25 +30,21 @@ async function createContactMessage(req, res) {
       contactMessage,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al enviar el mensaje.",
-    });
+    next(error);
   }
 }
 
-async function getContactMessages(req, res) {
+async function getContactMessages(req, res, next) {
   try {
     const messages = await ContactMessage.find().sort({ createdAt: -1 });
 
     return res.json(messages);
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al obtener los mensajes.",
-    });
+    next(error);
   }
 }
 
-async function markContactMessageAsRead(req, res) {
+async function markContactMessageAsRead(req, res, next) {
   try {
     const { id } = req.params;
 
@@ -66,13 +62,11 @@ async function markContactMessageAsRead(req, res) {
 
     return res.json(message);
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al marcar el mensaje como leído.",
-    });
+    next(error);
   }
 }
 
-async function deleteContactMessage(req, res) {
+async function deleteContactMessage(req, res, next) {
   try {
     const { id } = req.params;
 
@@ -88,9 +82,7 @@ async function deleteContactMessage(req, res) {
       message: "Mensaje eliminado correctamente.",
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al eliminar el mensaje.",
-    });
+    next(error);
   }
 }
 

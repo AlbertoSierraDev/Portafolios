@@ -4,7 +4,7 @@ import {
   createProject,
   getAdminProjects,
   updateProject,
-} from "../../../api/adminProjects";
+} from "../../api/adminProjects";
 
 type ProjectFormData = {
   title: string;

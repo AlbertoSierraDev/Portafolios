@@ -6,7 +6,7 @@ import {
   HiOutlineTrash,
   HiOutlineFolder,
 } from "react-icons/hi2";
-import { getAdminProjects, deleteProject } from "../../../api/adminProjects";
+import { getAdminProjects, deleteProject } from "../../api/adminProjects";
 import type { Project } from "../../types/project";
 
 export default function AdminProjects() {

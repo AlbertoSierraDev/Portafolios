@@ -7,6 +7,12 @@ const protectAdmin = (req, res, next) => {
     return res.status(401).json({ message: "No autorizado" });
   }
 
+  if (!process.env.ADMIN_SECRET) {
+    return res.status(500).json({
+      message: "Error de configuración del servidor",
+    });
+  }
+
   try {
     const decoded = jwt.verify(token, process.env.ADMIN_SECRET);
 
@@ -15,7 +21,7 @@ const protectAdmin = (req, res, next) => {
     }
 
     req.user = decoded;
-    next();
+    return next();
   } catch (error) {
     return res.status(401).json({ message: "Token inválido o expirado" });
   }
