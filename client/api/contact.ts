@@ -5,10 +5,15 @@ export type ContactFormData = {
   email: string;
   subject: string;
   message: string;
+  turnstileToken: string;
 };
 
-export type ContactMessage = ContactFormData & {
+export type ContactMessage = {
   _id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
   read: boolean;
   createdAt: string;
   updatedAt: string;

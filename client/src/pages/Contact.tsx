@@ -1,11 +1,13 @@
-import { FormEvent, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import {
   HiOutlineArrowRight,
   HiOutlineEnvelope,
   HiOutlineUser,
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineBriefcase,
+  HiOutlineShieldCheck,
 } from "react-icons/hi2";
 import { FaLinkedin } from "react-icons/fa";
 import { sendContactMessage } from "../../api/contact";
@@ -15,12 +17,16 @@ const LINKEDIN_URL =
   "https://www.linkedin.com/in/alberto-sierra-perez-44811a38a/";
 
 export default function Contact() {
+  const turnstileRef = useRef<TurnstileInstance>(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
@@ -44,14 +50,25 @@ export default function Contact() {
     }
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const handleSubmit: React.ComponentProps<"form">["onSubmit"] = async (
+    event,
+  ) => {
     event.preventDefault();
+
+    if (!turnstileToken) {
+      setStatus("error");
+      setError("Completa la verificación anti-bots antes de enviar.");
+      return;
+    }
 
     try {
       setStatus("sending");
       setError("");
 
-      await sendContactMessage(formData);
+      await sendContactMessage({
+        ...formData,
+        turnstileToken,
+      });
 
       setFormData({
         name: "",
@@ -60,9 +77,14 @@ export default function Contact() {
         message: "",
       });
 
+      setTurnstileToken("");
+      turnstileRef.current?.reset();
+
       setStatus("success");
     } catch (error) {
       setStatus("error");
+      setTurnstileToken("");
+      turnstileRef.current?.reset();
 
       if (error instanceof Error) {
         setError(error.message);
@@ -70,7 +92,9 @@ export default function Contact() {
         setError("No se pudo enviar el mensaje.");
       }
     }
-  }
+  };
+
+  const isSubmitDisabled = status === "sending" || !turnstileToken;
 
   return (
     <main className="relative min-h-screen px-6 py-16 text-white md:px-10 md:py-24">
@@ -86,13 +110,13 @@ export default function Contact() {
           </p>
 
           <h1 className="max-w-5xl text-4xl font-black uppercase leading-tight text-white md:text-7xl">
-            Hablemos de oportunidades laborales
+            HABLEMOS DE TECNOLOGÍA, PROYECTOS Y OPORTUNIDADES
           </h1>
 
           <p className="mt-6 max-w-3xl text-base leading-8 text-white/70 md:text-lg">
-            Estoy abierto a incorporarme a un equipo de desarrollo donde pueda
-            aportar, aprender y seguir creciendo profesionalmente. Puedes
-            escribirme directamente o contactar conmigo por LinkedIn.
+            Estoy abierto a oportunidades laborales y colaboraciones donde pueda
+            aportar mi base en sistemas, mi experiencia creando soluciones web y
+            mi enfoque en desarrollo fullstack.
           </p>
         </motion.div>
 
@@ -116,9 +140,11 @@ export default function Contact() {
                   <h2 className="text-2xl font-semibold uppercase tracking-[0.08em] text-white">
                     Enviar mensaje
                   </h2>
+
                   <p className="mt-1 text-sm text-white/50">
-                    El mensaje llegará directamente a mi panel de
-                    administración.
+                    Cuéntame tu propuesta, oportunidad o idea de proyecto.
+                    <br />
+                    (48h maximo respuesta)
                   </p>
                 </div>
               </div>
@@ -197,6 +223,44 @@ export default function Contact() {
                 />
               </label>
 
+              <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/45">
+                  <HiOutlineShieldCheck className="text-lg text-lime-400" />
+                  Verificación anti-bots
+                </div>
+
+                {import.meta.env.VITE_TURNSTILE_SITE_KEY ? (
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                    onSuccess={(token) => {
+                      setTurnstileToken(token);
+                      setError("");
+
+                      if (status === "error") {
+                        setStatus("idle");
+                      }
+                    }}
+                    onError={() => {
+                      setTurnstileToken("");
+                      setStatus("error");
+                      setError("No se pudo cargar la verificación anti-bots.");
+                    }}
+                    onExpire={() => {
+                      setTurnstileToken("");
+                    }}
+                    options={{
+                      theme: "dark",
+                      size: "flexible",
+                    }}
+                  />
+                ) : (
+                  <p className="text-sm leading-7 text-fuchsia-300">
+                    Falta configurar VITE_TURNSTILE_SITE_KEY en el frontend.
+                  </p>
+                )}
+              </div>
+
               {status === "success" && (
                 <p className="mt-5 rounded-2xl border border-lime-400/20 bg-lime-400/10 px-5 py-4 text-sm font-medium text-lime-400">
                   Mensaje enviado correctamente. Gracias por contactar conmigo.
@@ -211,12 +275,12 @@ export default function Contact() {
 
               <motion.button
                 type="submit"
-                disabled={status === "sending"}
+                disabled={isSubmitDisabled}
                 whileHover={{
-                  scale: status === "sending" ? 1 : 1.02,
-                  y: status === "sending" ? 0 : -2,
+                  scale: isSubmitDisabled ? 1 : 1.02,
+                  y: isSubmitDisabled ? 0 : -2,
                 }}
-                whileTap={{ scale: status === "sending" ? 1 : 0.98 }}
+                whileTap={{ scale: isSubmitDisabled ? 1 : 0.98 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
                 className="mt-7 inline-flex w-full items-center justify-center gap-3 rounded-md border border-cyan-200/60 bg-cyan-200 px-8 py-4 text-sm font-semibold uppercase tracking-[0.28em] text-[#0D0221] shadow-[0_0_28px_rgba(103,232,249,0.45)] transition hover:bg-cyan-100 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
               >
@@ -245,9 +309,11 @@ export default function Contact() {
                 </h2>
 
                 <p className="mt-4 text-base leading-8 text-white/70">
-                  Busco una oportunidad dentro de una empresa donde pueda formar
-                  parte de un equipo, trabajar en proyectos reales y seguir
-                  mejorando como desarrollador.
+                  Estoy abierto a oportunidades dentro del sector tecnológico,
+                  especialmente en desarrollo web, sistemas o áreas
+                  relacionadas.
+                  <br /> Cuento con disponibilidad para incorporarme cuando el
+                  proyecto lo requiera.
                 </p>
               </div>
             </div>

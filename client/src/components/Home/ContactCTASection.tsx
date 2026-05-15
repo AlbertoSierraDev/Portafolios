@@ -30,13 +30,15 @@ export default function ContactCTASection() {
               </div>
 
               <h2 className="max-w-4xl text-4xl font-black uppercase leading-tight text-white md:text-6xl">
-                Busco incorporarme a un equipo donde seguir creciendo
+                BUSCO UN EQUIPO DONDE APORTAR, APRENDER Y CRECER
               </h2>
 
               <p className="mt-6 max-w-3xl text-base leading-8 text-white/70 md:text-lg">
-                Estoy enfocado en seguir desarrollándome como programador,
-                aportar en proyectos reales y aprender dentro de un entorno
-                profesional con buenas prácticas de desarrollo.
+                Estoy preparado para dar el salto al sector tecnológico,
+                aportando mi base en sistemas, experiencia creando soluciones
+                web y enfoque en desarrollo fullstack. Busco trabajar en
+                proyectos reales, con buenas prácticas y un equipo del que
+                aprender.
               </p>
             </div>
 

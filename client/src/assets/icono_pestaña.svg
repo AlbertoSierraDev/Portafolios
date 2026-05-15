@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#21064a"/>
+      <stop offset="1" stop-color="#070215"/>
+    </linearGradient>
+  </defs>
+  <rect x="48" y="48" width="416" height="416" rx="112" fill="url(#bg)"/>
+  <rect x="48" y="48" width="416" height="416" rx="112" fill="none" stroke="#8cff00" stroke-width="10" opacity=".9" filter="url(#glow)"/>
+  <rect x="64" y="64" width="384" height="384" rx="96" fill="none" stroke="#78ebff" stroke-width="5" opacity=".65"/>
+  <circle cx="398" cy="132" r="18" fill="#8cff00" filter="url(#glow)"/>
+  <text x="256" y="306" text-anchor="middle"
+        font-family="Inter, Montserrat, Arial, sans-serif"
+        font-size="142" font-weight="900" letter-spacing="-8"
+        fill="#f7fbff" filter="url(#glow)">ASP</text>
+</svg>

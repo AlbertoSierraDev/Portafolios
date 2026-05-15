@@ -23,7 +23,7 @@ export default function ProjectDetail() {
       try {
         const data = await getProjectBySlug(slug);
         setProject(data);
-      } catch (err) {
+      } catch {
         setError("No se pudo cargar el proyecto");
       } finally {
         setLoading(false);

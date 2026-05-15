@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import profileImage from "../../assets/Foto_mia.png";
 
 export default function HeroSection() {
   return (
@@ -22,13 +23,12 @@ export default function HeroSection() {
 
               <div className="relative h-full w-full overflow-hidden rounded-full border border-cyan-200/20 bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.22),rgba(13,2,33,0.7)_45%,rgba(13,2,33,0.95)_75%)] shadow-[0_0_40px_rgba(34,211,238,0.12)]">
                 <img
-                  src="/avatar.png"
+                  src={profileImage}
                   alt="Profile"
                   className="h-full w-full object-cover opacity-90"
                 />
 
                 <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(13,2,33,0.08)_35%,rgba(13,2,33,0.32)_100%)]" />
-                <div className="absolute left-0 top-[22%] h-px w-full bg-cyan-300/30 shadow-[0_0_10px_rgba(103,232,249,0.45)]" />
               </div>
             </div>
           </motion.div>
@@ -40,21 +40,23 @@ export default function HeroSection() {
             className="max-w-2xl"
           >
             <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.42em] text-lime-400 md:text-xs">
-              SISTEMA ACTIVO
+              MODO CRECIMIENTO ACTIVO
             </p>
 
             <h1 className="mb-7 text-5xl font-black uppercase leading-[0.92] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
               <span className="block text-white">Desarrollador</span>
               <span className="block text-white">Fullstack</span>
-              <span className="block text-lime-400">Optimizado.</span>
+              <span className="block text-lime-400">WEB.</span>
             </h1>
 
             <div className="mb-8 flex max-w-xl gap-5">
               <div className="mt-1 h-24 w-[2px] shrink-0 bg-cyan-300 shadow-[0_0_16px_rgba(103,232,249,0.85)]" />
               <p className="text-base leading-8 text-white/72 md:text-lg">
-                Transformando la complejidad en arquitectura digital elegante,
-                especializado en sistemas web de alto rendimiento y experiencias
-                de usuario inmersivas.
+                Creo aplicaciones y soluciones web fullstack con JavaScript,
+                combinando desarrollo, arquitectura y una base sólida en
+                sistemas. He construido proyectos propios y soluciones web para
+                clientes, con la mirada puesta en seguir creciendo hacia la
+                ciberseguridad.
               </p>
             </div>
 

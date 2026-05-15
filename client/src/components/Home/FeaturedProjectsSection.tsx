@@ -67,9 +67,9 @@ export default function FeaturedProjectsSection() {
 
         setError("No se pudieron cargar los proyectos destacados.");
       } finally {
-        if (!isMounted) return;
-
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     }
 

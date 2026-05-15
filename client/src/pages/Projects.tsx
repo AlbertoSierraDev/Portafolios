@@ -16,7 +16,7 @@ export default function Projects() {
       try {
         const data = await getProjects();
         setProjects(data);
-      } catch (err) {
+      } catch {
         setError("Error al cargar proyectos");
       } finally {
         setLoading(false);

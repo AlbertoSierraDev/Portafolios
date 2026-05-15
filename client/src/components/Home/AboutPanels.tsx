@@ -34,29 +34,34 @@ export default function AboutPanels() {
               </div>
 
               <p className="max-w-5xl text-base leading-8 text-white/72 md:text-lg">
-                Soy un desarrollador enfocado en construir experiencias
-                digitales sólidas, visualmente cuidadas y con una arquitectura
-                limpia. Me interesa crear productos que no solo funcionen bien,
-                sino que también transmitan identidad, rendimiento y una
-                experiencia de usuario bien pensada.
+                Soy un perfil junior en tecnología con formación en Sistemas
+                Microinformáticos y Redes. Desde pequeño me ha apasionado la
+                informática, los sistemas y entender cómo funciona la tecnología
+                desde dentro. Mi primer contacto con la programación fue con
+                Bash, motivado por mi interés en Linux y su papel dentro de la
+                ciberseguridad. Durante los últimos años he desarrollado
+                proyectos propios y me he formado en aplicaciones web fullstack,
+                especialmente con el stack de JavaScript, poniendo foco en
+                arquitectura, organización del código y creación de productos
+                digitales sólidos.
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-3">
                 <div className="rounded-2xl border border-white/10 bg-black/10 p-5">
                   <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-300">
-                    Frontend
+                    FORMACIÓN
                   </p>
                   <p className="mt-3 text-sm leading-7 text-white/70 md:text-base">
-                    Interfaces dinámicas, diseño limpio y foco en experiencia.
+                    Sistemas Microinformáticos y Redes.{" "}
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-black/10 p-5">
                   <p className="text-[11px] uppercase tracking-[0.3em] text-lime-400">
-                    Backend
+                    STACK
                   </p>
                   <p className="mt-3 text-sm leading-7 text-white/70 md:text-base">
-                    APIs, estructura escalable y lógica mantenible.
+                    JavaScript, desarrollo web fullstack y arquitectura.{" "}
                   </p>
                 </div>
 
@@ -65,7 +70,8 @@ export default function AboutPanels() {
                     Objetivo
                   </p>
                   <p className="mt-3 text-sm leading-7 text-white/70 md:text-base">
-                    Crear productos útiles, rápidos y con personalidad visual.
+                    Primer empleo en tecnología y crecimiento hacia
+                    ciberseguridad.
                   </p>
                 </div>
               </div>
@@ -96,10 +102,20 @@ export default function AboutPanels() {
               </div>
 
               <p className="text-base leading-8 text-white/72 md:text-lg">
-                Me interesa la inteligencia artificial como herramienta para
-                potenciar productos digitales, automatizar procesos y explorar
-                nuevas formas de interacción. Busco entender cómo integrarla de
-                forma útil, práctica y bien diseñada en experiencias reales.
+                Uso la inteligencia artificial como apoyo para aprender,
+                investigar y resolver problemas, manteniendo siempre el criterio
+                técnico sobre el resultado.
+                <br /> Conozco y utilizo herramientas como agentes, skills y
+                MCPs, pero las aplico de forma estratégica: cuando un proyecto
+                requiere velocidad, automatización o exploración rápida. En mi
+                flujo habitual prefiero escribir, revisar y entender el código
+                por mí mismo.
+                <br /> Todo código que incorporo lo analizo, adapto y valido
+                antes de usarlo.
+                <br /> Veo la IA como una herramienta muy potente si se sabe
+                pedir bien, interpretar sus respuestas y mantener una base
+                técnica sólida. Mal utilizada, puede convertirse en un arma de
+                doble filo.
               </p>
             </div>
           </motion.article>
@@ -128,11 +144,12 @@ export default function AboutPanels() {
               </div>
 
               <p className="text-base leading-8 text-white/72 md:text-lg">
-                Me motiva aprender constantemente, experimentar con nuevas
-                tecnologías y superar retos que me obliguen a crecer como
-                desarrollador. Me atrae la idea de construir cosas con impacto,
-                mezclar creatividad con lógica y convertir ideas complejas en
-                experiencias claras y funcionales.
+                Me motiva aprender constantemente, enfrentar nuevos retos
+                técnicos y seguir creciendo dentro del sector tecnológico.
+                <br /> Me interesa construir productos digitales completos,
+                entendiendo tanto su lógica interna como su experiencia final.
+                <br /> A largo plazo, quiero especializarme en ciberseguridad,
+                apoyándome en una base sólida de desarrollo, sistemas y redes.
               </p>
             </div>
           </motion.article>

@@ -6,10 +6,12 @@ const {
   deleteContactMessage,
 } = require("../controllers/contactController");
 const { protectAdmin } = require("../middlewares/authMiddleware");
+const contactRateLimit = require("../middlewares/contactRateLimit");
+const verifyTurnstile = require("../middlewares/verifyTurnstile");
 
 const router = express.Router();
 
-router.post("/", createContactMessage);
+router.post("/", contactRateLimit, verifyTurnstile, createContactMessage);
 
 router.get("/", protectAdmin, getContactMessages);
 router.patch("/:id/read", protectAdmin, markContactMessageAsRead);
