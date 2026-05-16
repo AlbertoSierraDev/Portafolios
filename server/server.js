@@ -4,14 +4,12 @@ const app = require("./app");
 const connectDB = require("./config/db");
 const validateEnv = require("./config/validateEnv");
 
+validateEnv();
+
 const PORT = process.env.PORT || 5000;
 
-const startServer = async () => {
-  await connectDB();
+connectDB();
 
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-  });
-};
-
-startServer();
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en puerto ${PORT}`);
+});
