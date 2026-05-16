@@ -5,6 +5,8 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import DesktopOnly from "./components/DesktopOnly";
 
+import NotFound from "./pages/NotFound";
+
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
@@ -27,6 +29,7 @@ export default function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:slug" element={<ProjectDetail />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
 
           <Route element={<AdminLayout />}>
