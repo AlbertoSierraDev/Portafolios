@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import HomeLayout from "./components/HomeLayout";
 import MainLayout from "./components/MainLayout";
 import AdminLayout from "./components/AdminLayout";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
@@ -24,8 +25,10 @@ export default function App() {
         <ScrollToTop />
 
         <Routes>
-          <Route element={<MainLayout />}>
+          <Route element={<HomeLayout />}>
             <Route path="/" element={<Home />} />
+          </Route>
+          <Route element={<MainLayout />}>
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:slug" element={<ProjectDetail />} />
             <Route path="/contact" element={<Contact />} />
