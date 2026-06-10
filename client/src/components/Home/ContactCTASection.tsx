@@ -8,7 +8,7 @@ import {
 
 export default function ContactCTASection() {
   return (
-    <section className="relative px-6 pb-14 pt-0 md:px-10 md:pb-20 md:pt-0">
+    <section className="relative flex min-h-screen items-center justify-center px-10 pb-14">
       <div className="mx-auto max-w-[1500px]">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
