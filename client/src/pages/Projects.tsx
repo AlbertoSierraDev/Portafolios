@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { HiOutlineArrowUpRight } from "react-icons/hi2";
+import { HiOutlineArrowUpRight, HiOutlinePhoto } from "react-icons/hi2";
 import { FaGithub } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -28,9 +28,11 @@ export default function Projects() {
 
   if (loading) {
     return (
-      <section className="min-h-screen px-6 pb-20 pt-32 md:px-10">
+      <section className="min-h-screen px-4 pb-16 pt-28 sm:px-5 md:px-10 md:pb-20 md:pt-32">
         <div className="mx-auto max-w-[1500px]">
-          <p className="mt-20 text-center text-white">Cargando proyectos...</p>
+          <p className="mt-16 text-center text-sm text-white md:mt-20 md:text-base">
+            Cargando proyectos...
+          </p>
         </div>
       </section>
     );
@@ -38,25 +40,29 @@ export default function Projects() {
 
   if (error) {
     return (
-      <section className="min-h-screen px-6 pb-20 pt-32 md:px-10">
+      <section className="min-h-screen px-4 pb-16 pt-28 sm:px-5 md:px-10 md:pb-20 md:pt-32">
         <div className="mx-auto max-w-[1500px]">
-          <p className="mt-20 text-center text-red-400">{error}</p>
+          <p className="mt-16 text-center text-sm text-red-400 md:mt-20 md:text-base">
+            {error}
+          </p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="min-h-screen px-6 pb-20 pt-32 md:px-10">
+    <section className="min-h-screen px-4 pb-16 pt-28 sm:px-5 md:px-10 md:pb-20 md:pt-32">
       <div className="mx-auto max-w-[1500px]">
-        <div className="mb-14 text-center">
-          <p className="mb-3 text-[11px] uppercase tracking-[0.4em] text-cyan-300">
+        <div className="mb-10 text-center md:mb-14">
+          <p className="mb-2 text-[9px] uppercase tracking-[0.28em] text-cyan-300 md:mb-3 md:text-[11px] md:tracking-[0.4em]">
             Showcase principal
           </p>
-          <h1 className="text-4xl font-black uppercase text-white md:text-6xl">
+
+          <h1 className="text-3xl font-black uppercase text-white sm:text-4xl md:text-6xl">
             Proyectos
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/65 md:text-base">
+
+          <p className="mx-auto mt-4 max-w-2xl text-[13px] leading-6 text-white/65 sm:text-sm md:mt-5 md:text-base md:leading-7">
             Una selección de proyectos donde combino diseño, lógica y
             rendimiento para construir experiencias digitales sólidas y con
             identidad visual.
@@ -64,11 +70,11 @@ export default function Projects() {
         </div>
 
         {projects.length === 0 ? (
-          <p className="text-center text-white/70">
+          <p className="text-center text-sm text-white/70 md:text-base">
             Todavía no hay proyectos publicados.
           </p>
         ) : (
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-8">
             {projects.map((project, index) => (
               <motion.article
                 key={project._id}
@@ -76,24 +82,35 @@ export default function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: index * 0.08 }}
-                className="group overflow-hidden rounded-[28px] border border-cyan-300/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_0_35px_rgba(34,211,238,0.06)]"
+                className="group overflow-hidden rounded-[22px] border border-cyan-300/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_0_30px_rgba(34,211,238,0.06)] md:rounded-[28px] md:shadow-[0_0_35px_rgba(34,211,238,0.06)]"
               >
-                <div className="relative h-56 overflow-hidden">
+                <Link
+                  to={`/projects/${project.slug}`}
+                  className="relative block h-44 overflow-hidden sm:h-52 md:h-56"
+                >
                   <div className="absolute inset-0 bg-cyan-400/10" />
-                  <img
-                    src={project.coverImage}
-                    alt={project.title}
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(13,2,33,0.85),transparent_55%)]" />
-                </div>
 
-                <div className="p-6">
-                  <h2 className="mb-3 text-2xl font-bold uppercase text-white">
+                  {project.coverImage ? (
+                    <img
+                      src={project.coverImage}
+                      alt={project.title}
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-black/20">
+                      <HiOutlinePhoto className="text-5xl text-cyan-300/60 md:text-6xl" />
+                    </div>
+                  )}
+
+                  <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(13,2,33,0.85),transparent_55%)]" />
+                </Link>
+
+                <div className="p-5 md:p-6">
+                  <h2 className="mb-3 break-words text-xl font-bold uppercase leading-tight text-white md:text-2xl">
                     {project.title}
                   </h2>
 
-                  <p className="mb-5 text-sm leading-7 text-white/70 md:text-base">
+                  <p className="mb-5 line-clamp-3 text-[13px] leading-6 text-white/70 sm:text-sm md:text-base md:leading-7">
                     {project.shortDescription}
                   </p>
 
@@ -101,17 +118,17 @@ export default function Projects() {
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-cyan-300"
+                        className="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-2.5 py-1 text-[9px] uppercase tracking-[0.14em] text-cyan-300 md:px-3 md:text-[10px] md:tracking-[0.2em]"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <Link
                       to={`/projects/${project.slug}`}
-                      className="flex items-center gap-2 rounded-md border border-cyan-200/50 bg-cyan-200 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#0D0221] shadow-[0_0_20px_rgba(103,232,249,0.35)] transition-all duration-150 hover:scale-[1.03]"
+                      className="flex w-full items-center justify-center gap-2 rounded-md border border-cyan-200/50 bg-cyan-200 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0D0221] shadow-[0_0_20px_rgba(103,232,249,0.35)] transition-all duration-150 hover:scale-[1.03] sm:w-auto md:text-xs md:tracking-[0.24em]"
                     >
                       Ver detalles
                       <HiOutlineArrowUpRight className="text-base" />
@@ -122,7 +139,7 @@ export default function Projects() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-2 rounded-md border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-white/80 transition-all duration-150 hover:bg-white/10 hover:text-white"
+                        className="flex w-full items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/80 transition-all duration-150 hover:bg-white/10 hover:text-white sm:w-auto md:text-xs md:tracking-[0.24em]"
                       >
                         GitHub
                         <FaGithub className="text-sm" />

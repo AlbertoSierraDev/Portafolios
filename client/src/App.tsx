@@ -21,61 +21,61 @@ import AdminMessages from "./pages/admin/AdminMessages";
 export default function App() {
   return (
     <>
-      <DesktopOnly>
-        <ScrollToTop />
+      {/* <DesktopOnly> */}
+      <ScrollToTop />
 
-        <Routes>
-          <Route element={<HomeLayout />}>
-            <Route path="/" element={<Home />} />
-          </Route>
-          <Route element={<MainLayout />}>
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:slug" element={<ProjectDetail />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
+      <Routes>
+        <Route element={<HomeLayout />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route element={<MainLayout />}>
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:slug" element={<ProjectDetail />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
 
-          <Route element={<AdminLayout />}>
-            <Route path="/login" element={<AdminLogin />} />
+        <Route element={<AdminLayout />}>
+          <Route path="/login" element={<AdminLogin />} />
 
-            <Route
-              path="/admin/projects"
-              element={
-                <ProtectedRoute>
-                  <AdminProjects />
-                </ProtectedRoute>
-              }
-            />
+          <Route
+            path="/admin/projects"
+            element={
+              <ProtectedRoute>
+                <AdminProjects />
+              </ProtectedRoute>
+            }
+          />
 
-            <Route
-              path="/admin/projects/new"
-              element={
-                <ProtectedRoute>
-                  <AdminProjectForm />
-                </ProtectedRoute>
-              }
-            />
+          <Route
+            path="/admin/projects/new"
+            element={
+              <ProtectedRoute>
+                <AdminProjectForm />
+              </ProtectedRoute>
+            }
+          />
 
-            <Route
-              path="/admin/projects/:id/edit"
-              element={
-                <ProtectedRoute>
-                  <AdminProjectForm />
-                </ProtectedRoute>
-              }
-            />
+          <Route
+            path="/admin/projects/:id/edit"
+            element={
+              <ProtectedRoute>
+                <AdminProjectForm />
+              </ProtectedRoute>
+            }
+          />
 
-            <Route
-              path="/admin/messages"
-              element={
-                <ProtectedRoute>
-                  <AdminMessages />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
-        </Routes>
-      </DesktopOnly>
+          <Route
+            path="/admin/messages"
+            element={
+              <ProtectedRoute>
+                <AdminMessages />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+      </Routes>
+      {/* </DesktopOnly> */}
     </>
   );
 }

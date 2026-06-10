@@ -8,6 +8,12 @@ import ContactCTASection from "../components/Home/ContactCTASection";
 
 export default function Home() {
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+    if (!mediaQuery.matches) {
+      return;
+    }
+
     const originalBodyOverflow = document.body.style.overflow;
     const originalHtmlOverflow = document.documentElement.style.overflow;
 
@@ -21,24 +27,24 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="h-screen overflow-y-scroll scroll-smooth snap-y snap-mandatory">
-      <section className="min-h-screen snap-center">
+    <main className="min-h-screen md:h-screen md:overflow-y-scroll md:scroll-smooth md:snap-y md:snap-mandatory">
+      <section className="min-h-screen md:snap-center">
         <HeroSection />
       </section>
 
-      <section className="min-h-screen snap-center">
+      <section className="min-h-screen md:snap-center">
         <AboutPanels />
       </section>
 
-      <section className="min-h-screen snap-center">
+      <section className="min-h-screen md:snap-center">
         <FeaturedProjectsSection />
       </section>
 
-      <section className="min-h-screen snap-start">
+      <section className="min-h-screen md:snap-start">
         <SkillsSection />
       </section>
 
-      <section className="min-h-screen snap-center">
+      <section className="min-h-screen md:snap-center">
         <ContactCTASection />
       </section>
     </main>
