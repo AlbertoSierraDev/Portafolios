@@ -27,16 +27,16 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen md:h-screen md:overflow-y-scroll md:scroll-smooth md:snap-y md:snap-mandatory">
-      <section className="min-h-screen md:snap-center">
+    <main className="min-h-screen md:h-screen md:overflow-y-auto md:scroll-smooth md:snap-y md:snap-proximity">
+      <section className="min-h-screen md:snap-start">
         <HeroSection />
       </section>
 
-      <section className="min-h-screen md:snap-center">
+      <section className="min-h-screen md:snap-start">
         <AboutPanels />
       </section>
 
-      <section className="min-h-screen md:snap-center">
+      <section className="min-h-screen md:snap-start">
         <FeaturedProjectsSection />
       </section>
 
@@ -44,7 +44,7 @@ export default function Home() {
         <SkillsSection />
       </section>
 
-      <section className="min-h-screen md:snap-center">
+      <section className="min-h-screen md:snap-start">
         <ContactCTASection />
       </section>
     </main>

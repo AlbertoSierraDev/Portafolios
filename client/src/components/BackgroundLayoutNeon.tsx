@@ -53,8 +53,11 @@ export default function BackgroundLayout({ children }: BackgroundLayoutProps) {
   const verticalRainDrops = useMemo<VerticalRainDrop[]>(() => {
     const columns = Math.ceil(screenSize.width / GRID_SIZE);
 
-    return Array.from({ length: columns + 1 }, (_, index) => {
-      const left = index * GRID_SIZE;
+    // La mitad de luces verticales
+    const dropsCount = Math.ceil(columns / 2);
+
+    return Array.from({ length: dropsCount }, (_, index) => {
+      const left = index * GRID_SIZE * 2;
 
       return {
         left: `${left}px`,
@@ -68,8 +71,11 @@ export default function BackgroundLayout({ children }: BackgroundLayoutProps) {
   const horizontalRainDrops = useMemo<HorizontalRainDrop[]>(() => {
     const rows = Math.ceil(screenSize.height / GRID_SIZE);
 
-    return Array.from({ length: rows + 1 }, (_, index) => {
-      const top = index * GRID_SIZE;
+    // La mitad de luces horizontales
+    const dropsCount = Math.ceil(rows / 2);
+
+    return Array.from({ length: dropsCount }, (_, index) => {
+      const top = index * GRID_SIZE * 2;
 
       return {
         top: `${top}px`,
@@ -85,7 +91,7 @@ export default function BackgroundLayout({ children }: BackgroundLayoutProps) {
       {/* Grid de cuadrados */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Lluvia alineada con el grid */}
+      {/* Lluvia alineada con el grid, reducida a la mitad */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {verticalRainDrops.map((drop, index) => (
           <span

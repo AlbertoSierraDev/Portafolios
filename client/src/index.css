@@ -25,12 +25,12 @@
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(0, 255, 255, 0.95),
+    rgba(0, 255, 255, 0.62),
     transparent
   );
   box-shadow:
-    0 0 8px rgba(0, 255, 255, 0.8),
-    0 0 18px rgba(0, 255, 255, 0.35);
+    0 0 6px rgba(0, 255, 255, 0.48),
+    0 0 15px rgba(0, 255, 255, 0.22);
 }
 
 /* Vertical fuchsia */
@@ -38,12 +38,12 @@
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(188, 19, 254, 0.85),
+    rgba(188, 19, 254, 0.56),
     transparent
   );
   box-shadow:
-    0 0 8px rgba(188, 19, 254, 0.7),
-    0 0 18px rgba(188, 19, 254, 0.3);
+    0 0 6px rgba(188, 19, 254, 0.42),
+    0 0 15px rgba(188, 19, 254, 0.18);
 }
 
 /* Vertical lime */
@@ -51,12 +51,12 @@
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(57, 255, 20, 0.7),
+    rgba(57, 255, 20, 0.48),
     transparent
   );
   box-shadow:
-    0 0 8px rgba(57, 255, 20, 0.6),
-    0 0 18px rgba(57, 255, 20, 0.25);
+    0 0 6px rgba(57, 255, 20, 0.35),
+    0 0 15px rgba(57, 255, 20, 0.15);
 }
 
 /* Horizontal cyan */
@@ -64,12 +64,12 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(0, 255, 255, 0.8),
+    rgba(0, 255, 255, 0.52),
     transparent
   );
   box-shadow:
-    0 0 8px rgba(0, 255, 255, 0.65),
-    0 0 18px rgba(0, 255, 255, 0.25);
+    0 0 6px rgba(0, 255, 255, 0.38),
+    0 0 15px rgba(0, 255, 255, 0.16);
 }
 
 /* Horizontal fuchsia */
@@ -77,12 +77,12 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(188, 19, 254, 0.7),
+    rgba(188, 19, 254, 0.46),
     transparent
   );
   box-shadow:
-    0 0 8px rgba(188, 19, 254, 0.55),
-    0 0 18px rgba(188, 19, 254, 0.2);
+    0 0 6px rgba(188, 19, 254, 0.34),
+    0 0 15px rgba(188, 19, 254, 0.14);
 }
 
 /* Horizontal lime */
@@ -90,12 +90,12 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(57, 255, 20, 0.6),
+    rgba(57, 255, 20, 0.4),
     transparent
   );
   box-shadow:
-    0 0 8px rgba(57, 255, 20, 0.45),
-    0 0 18px rgba(57, 255, 20, 0.18);
+    0 0 6px rgba(57, 255, 20, 0.28),
+    0 0 15px rgba(57, 255, 20, 0.12);
 }
 
 @keyframes gridRainFallVertical {
@@ -105,11 +105,11 @@
   }
 
   8% {
-    opacity: 0.75;
+    opacity: 0.5;
   }
 
   80% {
-    opacity: 0.6;
+    opacity: 0.38;
   }
 
   100% {
@@ -125,11 +125,11 @@
   }
 
   8% {
-    opacity: 0.38;
+    opacity: 0.3;
   }
 
   80% {
-    opacity: 0.28;
+    opacity: 0.22;
   }
 
   100% {
@@ -154,11 +154,11 @@
     }
 
     8% {
-      opacity: 0.45;
+      opacity: 0.36;
     }
 
     80% {
-      opacity: 0.35;
+      opacity: 0.27;
     }
 
     100% {
@@ -178,7 +178,7 @@
     }
 
     80% {
-      opacity: 0.18;
+      opacity: 0.16;
     }
 
     100% {
