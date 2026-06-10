@@ -4,7 +4,6 @@ import MainLayout from "./components/MainLayout";
 import AdminLayout from "./components/AdminLayout";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
-import DesktopOnly from "./components/DesktopOnly";
 
 import NotFound from "./pages/NotFound";
 
@@ -21,7 +20,6 @@ import AdminMessages from "./pages/admin/AdminMessages";
 export default function App() {
   return (
     <>
-      {/* <DesktopOnly> */}
       <ScrollToTop />
 
       <Routes>
@@ -75,7 +73,6 @@ export default function App() {
           />
         </Route>
       </Routes>
-      {/* </DesktopOnly> */}
     </>
   );
 }
