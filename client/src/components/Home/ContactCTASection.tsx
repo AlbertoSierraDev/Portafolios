@@ -35,10 +35,10 @@ export default function ContactCTASection() {
 
               <p className="mt-4 max-w-3xl text-[13px] leading-6 text-white/70 sm:text-sm md:mt-6 md:text-lg md:leading-8">
                 Estoy preparado para dar el salto al sector tecnológico,
-                aportando mi base en sistemas, experiencia creando soluciones
-                web y enfoque en desarrollo fullstack. Busco trabajar en
-                proyectos reales, con buenas prácticas y un equipo del que
-                aprender.
+                aportando mi base en sistemas, soporte IT y desarrollo web
+                fullstack. Busco trabajar en proyectos reales, resolver
+                incidencias, seguir aprendiendo y crecer dentro de un equipo
+                técnico.
               </p>
             </div>
 

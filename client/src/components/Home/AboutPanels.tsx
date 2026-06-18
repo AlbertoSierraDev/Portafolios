@@ -38,15 +38,13 @@ export default function AboutPanels() {
 
               <p className="max-w-5xl text-[12px] leading-5 text-white/72 sm:text-[13px] sm:leading-6 md:text-[15px] md:leading-7">
                 Soy un perfil junior en tecnología con formación en Sistemas
-                Microinformáticos y Redes. Tengo interés tanto en el desarrollo
-                web fullstack como en el soporte técnico IT, combinando
-                conocimientos de JavaScript, React, Node.js, Linux, servidores,
-                redes básicas y resolución de incidencias. He desarrollado
-                proyectos propios donde he trabajado con aplicaciones web, APIs,
-                bases de datos, despliegues en VPS, Nginx, PM2, SSH y
-                diagnóstico de errores. Me considero una persona resolutiva, con
-                capacidad de aprendizaje rápido y orientación a crear soluciones
-                útiles, claras y mantenibles.
+                Microinformáticos y Redes, orientado al desarrollo web fullstack
+                y al soporte técnico IT. He trabajado en proyectos propios con
+                JavaScript, React, Node.js, APIs, bases de datos y despliegues
+                en VPS, utilizando también Linux, SSH, Nginx y PM2. Me interesa
+                unir desarrollo, sistemas y soporte técnico para crear
+                soluciones útiles, resolver incidencias y seguir creciendo
+                dentro del sector IT.
               </p>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-3 md:mt-5">
@@ -66,7 +64,8 @@ export default function AboutPanels() {
                   </p>
 
                   <p className="mt-2 text-[11px] leading-5 text-white/70 md:text-sm">
-                    JavaScript, desarrollo web fullstack y arquitectura.
+                    JavaScript, React, Node.js, Express, PHP, MySQL, SQLite,
+                    Git, Linux, SSH, Nginx y VPS.
                   </p>
                 </div>
 
@@ -76,8 +75,8 @@ export default function AboutPanels() {
                   </p>
 
                   <p className="mt-2 text-[11px] leading-5 text-white/70 md:text-sm">
-                    Primer empleo en tecnología y crecimiento hacia
-                    ciberseguridad.
+                    Primer empleo en Soporte IT, Helpdesk N1, Técnico
+                    Informático Junior, sistemas junior o desarrollo fullstack.
                   </p>
                 </div>
               </div>
@@ -111,14 +110,14 @@ export default function AboutPanels() {
               </div>
 
               <p className="text-[12px] leading-5 text-white/72 sm:text-[13px] sm:leading-6 md:text-[15px] md:leading-7">
-                Uso la inteligencia artificial como apoyo para aprender,
-                investigar y resolver problemas, manteniendo siempre el criterio
-                técnico sobre el resultado.
+                Uso herramientas de inteligencia artificial como apoyo para
+                aprender, investigar, documentar, probar ideas y resolver
+                problemas técnicos de forma más eficiente.
                 <br /> Conozco y utilizo herramientas como agentes, skills y
                 MCPs, aplicándolas de forma estratégica cuando un proyecto
-                requiere velocidad, automatización o exploración rápida.
-                <br /> Todo código que incorporo lo analizo, adapto y valido
-                antes de usarlo.
+                requiere velocidad, automatización, análisis de código o
+                exploración rápida. Todo resultado generado con IA lo reviso,
+                adapto y valido antes de incorporarlo a un proyecto.
               </p>
             </div>
           </motion.article>
@@ -150,12 +149,14 @@ export default function AboutPanels() {
               </div>
 
               <p className="text-[12px] leading-5 text-white/72 sm:text-[13px] sm:leading-6 md:text-[15px] md:leading-7">
-                Me motiva aprender constantemente, enfrentar nuevos retos
-                técnicos y seguir creciendo dentro del sector tecnológico.
-                <br /> Me interesa construir productos digitales completos,
-                entendiendo tanto su lógica interna como su experiencia final.
-                <br /> A largo plazo, quiero especializarme en ciberseguridad,
-                apoyándome en una base sólida de desarrollo, sistemas y redes.
+                Soy un perfil junior en tecnología con formación en Sistemas
+                Microinformáticos y Redes, orientado al desarrollo web fullstack
+                y al soporte técnico IT. He trabajado en proyectos propios con
+                JavaScript, React, Node.js, APIs, bases de datos y despliegues
+                en VPS, utilizando también Linux, SSH, Nginx y PM2. Me interesa
+                unir desarrollo, sistemas y soporte técnico para crear
+                soluciones útiles, resolver incidencias y seguir creciendo
+                dentro del sector IT.
               </p>
             </div>
           </motion.article>

@@ -38,23 +38,26 @@ export default function HeroSection() {
           className="order-2 mx-auto max-w-xl text-center md:order-none md:mx-0 md:max-w-2xl md:text-left"
         >
           <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.22em] text-lime-400 sm:text-[10px] md:mb-5 md:text-xs md:tracking-[0.42em]">
-            MODO CRECIMIENTO ACTIVO
+            DESARROLLO WEB · SOPORTE IT · SISTEMAS
           </p>
 
           <h1 className="mb-4 text-[2.15rem] font-black uppercase leading-[0.94] text-white sm:text-[3rem] md:mb-7 md:text-7xl lg:text-[5.2rem]">
-            <span className="block">Desarrollador</span>
-            <span className="block">Fullstack</span>
-            <span className="block text-lime-400">WEB.</span>
+            <span className="block">FULLSTACK JUNIOR</span>
+            {/* <span className="block">Fullstack</span> */}
+            <span className="block text-lime-400">Y TÉCNICO IT.</span>
           </h1>
 
           <div className="mb-6 flex max-w-xl gap-4 text-left md:mb-8 md:gap-5">
             <div className="mt-1 hidden h-24 w-[2px] shrink-0 bg-cyan-300 shadow-[0_0_16px_rgba(103,232,249,0.85)] sm:block" />
 
             <p className="text-[13px] leading-6 text-white/72 sm:text-sm sm:leading-7 md:text-lg md:leading-8">
-              Creo aplicaciones y soluciones web fullstack con JavaScript,
-              combinando desarrollo, arquitectura y una base sólida en sistemas.
-              He construido proyectos propios y soluciones web para clientes,
-              con la mirada puesta en seguir creciendo hacia la ciberseguridad.
+              Creo soluciones web fullstack con JavaScript, React, Node.js y
+              bases de datos, combinando desarrollo, lógica de negocio y una
+              base sólida en sistemas. Tengo formación en Sistemas
+              Microinformáticos y Redes, con interés en Soporte IT, Helpdesk N1,
+              microinformática, Windows, Linux, redes y entornos de servidor.
+              Busco seguir creciendo dentro del sector tecnológico, uniendo
+              desarrollo web, soporte técnico y sistemas.
             </p>
           </div>
 
