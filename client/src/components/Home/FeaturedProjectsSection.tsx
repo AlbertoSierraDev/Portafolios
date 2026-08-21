@@ -103,12 +103,12 @@ export default function FeaturedProjectsSection() {
             </p>
 
             <h2 className="text-2xl font-black uppercase leading-tight text-white sm:text-3xl md:text-6xl">
-              Construcciones recientes
+              PROYECTOS & LABORATORIOS
             </h2>
 
             <p className="mt-3 max-w-3xl text-[13px] leading-6 text-white/70 sm:text-sm md:mt-5 md:text-lg md:leading-8">
-              Una muestra real de proyectos cargados desde la API del
-              portafolio, con acceso directo al detalle completo de cada uno.
+              Una muestra real de proyectos , con acceso directo al detalle
+              completo de cada uno.
             </p>
           </div>
 

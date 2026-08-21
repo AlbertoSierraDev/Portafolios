@@ -38,26 +38,27 @@ export default function HeroSection() {
           className="order-2 mx-auto max-w-xl text-center md:order-none md:mx-0 md:max-w-2xl md:text-left"
         >
           <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.22em] text-lime-400 sm:text-[10px] md:mb-5 md:text-xs md:tracking-[0.42em]">
-            DESARROLLO WEB · SOPORTE IT · SISTEMAS
+            SISTEMAS · REDES · CIBERSEGURIDAD
           </p>
 
-          <h1 className="mb-4 text-[2.15rem] font-black uppercase leading-[0.94] text-white sm:text-[3rem] md:mb-7 md:text-7xl lg:text-[5.2rem]">
-            <span className="block">FULLSTACK JUNIOR</span>
-            {/* <span className="block">Fullstack</span> */}
-            <span className="block text-lime-400">Y TÉCNICO IT.</span>
+          <h1 className="mb-4 text-[1.9rem] font-black uppercase leading-[0.94] text-white sm:text-[2.5rem] md:mb-7 md:text-6xl lg:text-[4rem]">
+            <span className="block">SISTEMAS, REDES</span>
+            <span className="block text-lime-400">Y CIBERSEGURIDAD.</span>
           </h1>
 
           <div className="mb-6 flex max-w-xl gap-4 text-left md:mb-8 md:gap-5">
             <div className="mt-1 hidden h-24 w-[2px] shrink-0 bg-cyan-300 shadow-[0_0_16px_rgba(103,232,249,0.85)] sm:block" />
 
             <p className="text-[13px] leading-6 text-white/72 sm:text-sm sm:leading-7 md:text-lg md:leading-8">
-              Creo soluciones web fullstack con JavaScript, React, Node.js y
-              bases de datos, combinando desarrollo, lógica de negocio y una
-              base sólida en sistemas. Tengo formación en Sistemas
-              Microinformáticos y Redes, con interés en Soporte IT, Helpdesk N1,
-              microinformática, Windows, Linux, redes y entornos de servidor.
-              Busco seguir creciendo dentro del sector tecnológico, uniendo
-              desarrollo web, soporte técnico y sistemas.
+              Soy técnico IT con formación en sistemas y redes, orientando mi
+              carrera hacia la ciberseguridad y el pentesting. Me interesa
+              entender cómo funcionan los sistemas, redes y aplicaciones para
+              identificar sus debilidades y comprender la seguridad desde su
+              base. Practico en laboratorios y CTFs trabajando con Linux,
+              Windows, redes, seguridad web y herramientas como Burp Suite, Nmap
+              y Wireshark. Además, cuento con conocimientos de desarrollo web,
+              scripting y servidores, que utilizo como base para comprender
+              mejor las aplicaciones y automatizar procesos.
             </p>
           </div>
 

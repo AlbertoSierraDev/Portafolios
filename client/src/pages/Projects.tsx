@@ -55,17 +55,17 @@ export default function Projects() {
       <div className="mx-auto max-w-[1500px]">
         <div className="mb-10 text-center md:mb-14">
           <p className="mb-2 text-[9px] uppercase tracking-[0.28em] text-cyan-300 md:mb-3 md:text-[11px] md:tracking-[0.4em]">
-            Showcase principal
+            PORTFOLIO TÉCNICO
           </p>
 
           <h1 className="text-3xl font-black uppercase text-white sm:text-4xl md:text-6xl">
-            Proyectos
+            PROYECTOS & LABS
           </h1>
 
           <p className="mx-auto mt-4 max-w-2xl text-[13px] leading-6 text-white/65 sm:text-sm md:mt-5 md:text-base md:leading-7">
-            Una selección de proyectos donde combino diseño, lógica y
-            rendimiento para construir experiencias digitales sólidas y con
-            identidad visual.
+            Proyectos y laboratorios donde pongo en práctica desarrollo,
+            sistemas, redes y ciberseguridad, aprendiendo a construir, analizar
+            y resolver problemas reales.
           </p>
         </div>
 

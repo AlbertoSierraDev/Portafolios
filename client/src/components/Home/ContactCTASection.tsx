@@ -26,7 +26,7 @@ export default function ContactCTASection() {
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-lime-400/20 bg-lime-400/10 px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-lime-400 sm:text-[10px] md:mb-5 md:gap-3 md:px-4 md:text-[11px] md:tracking-[0.28em]">
                 <HiOutlineBriefcase className="text-base md:text-lg" />
-                Abierto a oportunidades laborales
+                ABIERTO A OPORTUNIDADES EN IT{" "}
               </div>
 
               <h2 className="max-w-4xl text-2xl font-black uppercase leading-tight text-white sm:text-3xl md:text-6xl">
@@ -34,11 +34,11 @@ export default function ContactCTASection() {
               </h2>
 
               <p className="mt-4 max-w-3xl text-[13px] leading-6 text-white/70 sm:text-sm md:mt-6 md:text-lg md:leading-8">
-                Estoy preparado para dar el salto al sector tecnológico,
-                aportando mi base en sistemas, soporte IT y desarrollo web
-                fullstack. Busco trabajar en proyectos reales, resolver
-                incidencias, seguir aprendiendo y crecer dentro de un equipo
-                técnico.
+                Busco seguir creciendo en el sector IT, aportando mi base en
+                sistemas, redes y soporte técnico mientras continúo
+                desarrollándome en ciberseguridad. Me interesa formar parte de
+                proyectos reales, resolver problemas, aprender y aportar
+                soluciones con iniciativa y curiosidad técnica.
               </p>
             </div>
 

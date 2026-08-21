@@ -109,14 +109,15 @@ export default function Contact() {
             Contacto
           </p>
 
-          <h1 className="max-w-5xl text-3xl font-black uppercase leading-tight text-white sm:text-4xl md:text-7xl">
+          <h1 className="max-w-4xl text-3xl font-black uppercase leading-[1.05] text-white sm:text-4xl md:text-5xl">
             HABLEMOS DE TECNOLOGÍA, PROYECTOS Y OPORTUNIDADES
           </h1>
 
-          <p className="mt-4 max-w-3xl text-[13px] leading-6 text-white/70 sm:text-sm md:mt-6 md:text-lg md:leading-8">
+          <p className="mt-4 max-w-3xl text-[13px] leading-6 text-white/70 sm:text-sm md:mt-5 md:text-base md:leading-7">
             Estoy abierto a oportunidades laborales y colaboraciones donde pueda
-            aportar mi base en sistemas, mi experiencia creando soluciones web y
-            mi enfoque en desarrollo fullstack.
+            aportar mis conocimientos en sistemas, redes, desarrollo y
+            ciberseguridad, mientras continúo aprendiendo y creciendo
+            profesionalmente.
           </p>
         </motion.div>
 
@@ -309,11 +310,11 @@ export default function Contact() {
                 </h2>
 
                 <p className="mt-3 text-sm leading-7 text-white/70 md:mt-4 md:text-base md:leading-8">
-                  Estoy abierto a oportunidades dentro del sector tecnológico,
-                  especialmente en desarrollo web, sistemas o áreas
-                  relacionadas.
-                  <br /> Cuento con disponibilidad para incorporarme cuando el
-                  proyecto lo requiera.
+                  Estoy abierto a oportunidades dentro del sector IT,
+                  especialmente en sistemas, redes, soporte técnico y
+                  ciberseguridad. Busco un entorno donde pueda aportar mi base
+                  técnica, afrontar nuevos retos y seguir desarrollándome
+                  profesionalmente.
                 </p>
               </div>
             </div>
