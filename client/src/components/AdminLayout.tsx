@@ -4,6 +4,7 @@ import {
   HiOutlineArrowLeftOnRectangle,
   HiOutlineBriefcase,
   HiOutlineChatBubbleLeftRight,
+  HiOutlineAcademicCap,
   HiOutlineFolder,
   HiOutlineHome,
   HiOutlinePlus,
@@ -26,6 +27,16 @@ const navItems = [
     to: "/admin/messages",
     icon: HiOutlineChatBubbleLeftRight,
     isActive: (pathname: string) => pathname === "/admin/messages",
+  },
+  {
+    label: "Certificados",
+    to: "/admin/certificates",
+    icon: HiOutlineAcademicCap,
+    isActive: (pathname: string) =>
+      pathname === "/admin/certificates" ||
+      pathname === "/admin/certificates/new" ||
+      (pathname.startsWith("/admin/certificates/") &&
+        pathname.endsWith("/edit")),
   },
 ];
 

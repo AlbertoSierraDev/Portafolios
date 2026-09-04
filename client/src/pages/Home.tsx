@@ -5,6 +5,7 @@ import AboutPanels from "../components/Home/AboutPanels";
 import FeaturedProjectsSection from "../components/Home/FeaturedProjectsSection";
 import SkillsSection from "../components/Home/SkillsSection";
 import ContactCTASection from "../components/Home/ContactCTASection";
+import CertificatesSection from "../components/Home/CertificatesSection";
 
 export default function Home() {
   useEffect(() => {
@@ -34,6 +35,10 @@ export default function Home() {
 
       <section className="min-h-screen md:snap-start">
         <AboutPanels />
+      </section>
+
+      <section className="min-h-screen md:snap-start">
+        <CertificatesSection />
       </section>
 
       <section className="min-h-screen md:snap-start">

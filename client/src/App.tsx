@@ -16,6 +16,8 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminProjects from "./pages/admin/AdminProjects";
 import AdminProjectForm from "./pages/admin/AdminProjectForm";
 import AdminMessages from "./pages/admin/AdminMessages";
+import AdminCertificates from "./pages/admin/AdminCertificates";
+import AdminCertificateForm from "./pages/admin/AdminCertificateForm";
 
 export default function App() {
   return (
@@ -68,6 +70,33 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <AdminMessages />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/certificates"
+            element={
+              <ProtectedRoute>
+                <AdminCertificates />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/certificates/new"
+            element={
+              <ProtectedRoute>
+                <AdminCertificateForm />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/certificates/:id/edit"
+            element={
+              <ProtectedRoute>
+                <AdminCertificateForm />
               </ProtectedRoute>
             }
           />

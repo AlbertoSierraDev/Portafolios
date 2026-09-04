@@ -2,9 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
+const path = require("path");
 
 const projectRoutes = require("./routes/projectRoutes");
 const adminProjectRoutes = require("./routes/adminProjectRoutes");
+const certificateRoutes = require("./routes/certificateRoutes");
+const adminCertificateRoutes = require("./routes/adminCertificateRoutes");
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const notFound = require("./middlewares/notFoundMiddleware");
@@ -43,12 +46,22 @@ app.use(
 app.use(express.json({ limit: "100kb" }));
 app.use(cookieParser());
 
+app.use(
+  "/uploads/certificates",
+  express.static(path.resolve(__dirname, "uploads", "certificates"), {
+    fallthrough: false,
+    index: false,
+  }),
+);
+
 app.get("/", (req, res) => {
   res.json({ message: "API del portafolio funcionando" });
 });
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/admin/projects", adminProjectRoutes);
+app.use("/api/certificates", certificateRoutes);
+app.use("/api/admin/certificates", adminCertificateRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 
