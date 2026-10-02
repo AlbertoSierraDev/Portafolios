@@ -1,45 +1,45 @@
-name: Azure Static Web Apps CI/CD
+name: Build and deploy Node.js project to Azure Function App - portafolios-api
 
 on:
   push:
     branches:
       - azure-migration
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - azure-migration
+  workflow_dispatch:
+
+env:
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './server'
+  NODE_VERSION: '22'
 
 jobs:
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+  build-and-deploy:
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_MEADOW_00415CB10 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
+          node-version: ${{ env.NODE_VERSION }}
 
-          app_location: "./client"
-          api_location: ""
-          output_location: "dist"
+      - name: Install dependencies
+        working-directory: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        run: npm ci
 
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        id: closepullrequest
-        uses: Azure/static-web-apps-deploy@v1
+      - name: Login to Azure
+        uses: azure/login@v2
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_MEADOW_00415CB10 }}
-          action: "close"
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E71425539ED54824BE047DC5C15CE6B1 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4313496615D2448DAFDCD5728EC7925D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FE5CEFF7E749486396DDC6164E7AC0F0 }}
+
+      - name: Deploy Azure Functions
+        uses: Azure/functions-action@v1
+        with:
+          app-name: 'portafolios-api'
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
