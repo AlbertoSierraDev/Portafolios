@@ -5,12 +5,12 @@ import {
   getAdminCertificates,
   updateCertificate,
 } from "../../api/adminCertificates";
-import type { Certificate } from "../../types/certificate";
 
 type FormState = {
   title: string;
   issuer: string;
   description: string;
+  image: string;
   credentialUrl: string;
   issueDate: string;
   displayOrder: string;
@@ -21,14 +21,12 @@ const initialForm: FormState = {
   title: "",
   issuer: "",
   description: "",
+  image: "",
   credentialUrl: "",
   issueDate: "",
   displayOrder: "0",
   visible: true,
 };
-
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
-const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 function dateInputValue(value: string | null) {
   return value ? value.slice(0, 10) : "";
@@ -49,9 +47,6 @@ export default function AdminCertificateForm() {
   const { id } = useParams<{ id: string }>();
   const isEditMode = Boolean(id);
   const [form, setForm] = useState<FormState>(initialForm);
-  const [currentCertificate, setCurrentCertificate] = useState<Certificate | null>(null);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState("");
   const [loading, setLoading] = useState(isEditMode);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -66,11 +61,11 @@ export default function AdminCertificateForm() {
           setError("Certificado no encontrado.");
           return;
         }
-        setCurrentCertificate(certificate);
         setForm({
           title: certificate.title,
           issuer: certificate.issuer,
           description: certificate.description,
+          image: certificate.image || "",
           credentialUrl: certificate.credentialUrl || "",
           issueDate: dateInputValue(certificate.issueDate),
           displayOrder: String(certificate.displayOrder),
@@ -85,16 +80,6 @@ export default function AdminCertificateForm() {
     loadCertificate();
   }, [id]);
 
-  useEffect(() => {
-    if (!selectedImage) {
-      setPreviewUrl("");
-      return;
-    }
-    const objectUrl = URL.createObjectURL(selectedImage);
-    setPreviewUrl(objectUrl);
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedImage]);
-
   function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const target = event.target;
     setForm((current) => ({
@@ -103,28 +88,22 @@ export default function AdminCertificateForm() {
     }));
   }
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0] || null;
-    if (!file) return;
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-      setError("La imagen debe ser JPEG, PNG o WebP.");
-      event.target.value = "";
-      return;
+  function isValidImageValue(value: string) {
+    if (/^\/uploads\/certificates\/[0-9a-f-]+\.(jpg|png|webp)$/i.test(value)) return true;
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:";
+    } catch {
+      return false;
     }
-    if (file.size > MAX_IMAGE_SIZE) {
-      setError("La imagen no puede superar los 5 MB.");
-      event.target.value = "";
-      return;
-    }
-    setError("");
-    setSelectedImage(file);
   }
 
   function validateForm() {
     if (!form.title.trim()) return "El título es obligatorio.";
     if (!form.issuer.trim()) return "La entidad emisora es obligatoria.";
     if (!form.description.trim()) return "La descripción es obligatoria.";
-    if (!isEditMode && !selectedImage) return "La imagen es obligatoria al crear un certificado.";
+    if (!form.image.trim()) return "La URL de imagen es obligatoria.";
+    if (!isValidImageValue(form.image.trim())) return "La imagen debe ser una URL HTTPS válida.";
     if (!isValidHttpUrl(form.credentialUrl.trim())) return "La URL debe utilizar http o https.";
     if (!/^\d+$/.test(form.displayOrder) || Number(form.displayOrder) < 0) return "El orden debe ser un entero mayor o igual que 0.";
     if (form.issueDate && Number.isNaN(new Date(`${form.issueDate}T00:00:00`).getTime())) return "La fecha de emisión no es válida.";
@@ -140,18 +119,19 @@ export default function AdminCertificateForm() {
     }
     setSaving(true);
     setError("");
-    const formData = new FormData();
-    formData.append("title", form.title.trim());
-    formData.append("issuer", form.issuer.trim());
-    formData.append("description", form.description.trim());
-    formData.append("credentialUrl", form.credentialUrl.trim());
-    formData.append("issueDate", form.issueDate);
-    formData.append("displayOrder", form.displayOrder);
-    formData.append("visible", String(form.visible));
-    if (selectedImage) formData.append("image", selectedImage);
+    const payload = {
+      title: form.title.trim(),
+      issuer: form.issuer.trim(),
+      description: form.description.trim(),
+      image: form.image.trim(),
+      credentialUrl: form.credentialUrl.trim(),
+      issueDate: form.issueDate,
+      displayOrder: form.displayOrder,
+      visible: form.visible,
+    };
     try {
-      if (isEditMode && id) await updateCertificate(id, formData);
-      else await createCertificate(formData);
+      if (isEditMode && id) await updateCertificate(id, payload);
+      else await createCertificate(payload);
       navigate("/admin/certificates");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al guardar el certificado.");
@@ -180,7 +160,7 @@ export default function AdminCertificateForm() {
           <div><label htmlFor="certificate-issuer" className="mb-2 block text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Entidad emisora *</label><input id="certificate-issuer" name="issuer" value={form.issuer} onChange={handleChange} maxLength={160} required className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-cyan-300/40" /></div>
         </div>
         <div><label htmlFor="certificate-description" className="mb-2 block text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Descripción *</label><textarea id="certificate-description" name="description" value={form.description} onChange={handleChange} maxLength={2000} rows={6} required className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-cyan-300/40" /></div>
-        <div><label htmlFor="certificate-image" className="mb-2 block text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Imagen {isEditMode ? "(opcional)" : "*"}</label><input id="certificate-image" name="image" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageChange} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white file:mr-4 file:rounded-lg file:border-0 file:bg-cyan-200 file:px-4 file:py-2 file:font-semibold file:text-[#0D0221]" /><p className="mt-2 text-xs text-white/45">JPEG, PNG o WebP. Máximo 5 MB.</p>{(previewUrl || currentCertificate?.image) && <div className="mt-4 overflow-hidden rounded-2xl border border-cyan-300/10 bg-white/[0.03]"><img src={previewUrl || currentCertificate?.image} alt="Vista previa del certificado" className="max-h-72 w-full object-contain" /></div>}</div>
+        <div><label htmlFor="certificate-image" className="mb-2 block text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Imagen / URL de imagen *</label><input id="certificate-image" name="image" type="text" inputMode="url" value={form.image} onChange={handleChange} placeholder="https://res.cloudinary.com/..." required className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-cyan-300/40" /><p className="mt-2 text-xs text-white/45">Pega una URL HTTPS pública de la imagen. Los certificados antiguos con /uploads/certificates se conservan durante la transición.</p>{form.image.trim() && <div className="mt-4 overflow-hidden rounded-2xl border border-cyan-300/10 bg-white/[0.03]"><img src={form.image.trim()} alt="Vista previa del certificado" className="max-h-72 w-full object-contain" /></div>}</div>
         <div className="grid gap-6 md:grid-cols-3">
           <div><label htmlFor="certificate-date" className="mb-2 block text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Fecha de emisión</label><input id="certificate-date" name="issueDate" type="date" value={form.issueDate} onChange={handleChange} className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-cyan-300/40" /></div>
           <div><label htmlFor="certificate-url" className="mb-2 block text-xs font-semibold uppercase tracking-[0.24em] text-white/70">URL de credencial</label><input id="certificate-url" name="credentialUrl" type="url" value={form.credentialUrl} onChange={handleChange} placeholder="https://..." className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-cyan-300/40" /></div>

@@ -2,6 +2,7 @@ const ALLOWED_FIELDS = new Set([
   "title",
   "issuer",
   "description",
+  "image",
   "credentialUrl",
   "issueDate",
   "displayOrder",
@@ -18,6 +19,20 @@ function isValidUrl(value) {
   try {
     const url = new URL(value);
     return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function isValidImageUrl(value) {
+  if (!isNonEmptyString(value)) return false;
+  if (/^\/uploads\/certificates\/[0-9a-f-]+\.(jpg|png|webp)$/i.test(value)) {
+    return true;
+  }
+
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:";
   } catch {
     return false;
   }
@@ -57,6 +72,13 @@ function validateCertificatePayload(payload, { partial = false } = {}) {
       errors.description = "La descripción es obligatoria.";
     } else if (payload.description.trim().length > 2000) {
       errors.description = "La descripción no puede superar los 2000 caracteres.";
+    }
+  }
+
+  if (!partial || payload.image !== undefined) {
+    if (!isValidImageUrl(payload.image)) {
+      errors.image =
+        "La imagen debe ser una URL HTTPS válida o una ruta existente de certificados.";
     }
   }
 

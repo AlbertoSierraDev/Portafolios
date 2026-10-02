@@ -99,6 +99,7 @@ function buildCertificatePayload(body, { partial = false } = {}) {
     if (body.title !== undefined) payload.title = body.title;
     if (body.issuer !== undefined) payload.issuer = body.issuer;
     if (body.description !== undefined) payload.description = body.description;
+    if (body.image !== undefined) payload.image = body.image;
     if (body.credentialUrl !== undefined) {
       payload.credentialUrl = body.credentialUrl === "" ? null : body.credentialUrl;
     }
@@ -159,20 +160,16 @@ async function getAdminCertificates(_req, res, next) {
 
 async function createCertificate(req, res, next) {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: "La imagen es obligatoria." });
-    }
+    const body = { ...(req.body || {}) };
+    if (req.file) body.image = getPublicImageUrl(req.file);
 
-    const { payload, validation } = buildCertificatePayload(req.body);
+    const { payload, validation } = buildCertificatePayload(body);
     if (!validation.isValid) {
-      await removeUploadedFile(req.file.path).catch(() => undefined);
+      if (req.file?.path) await removeUploadedFile(req.file.path).catch(() => undefined);
       return sendValidationError(res, validation);
     }
 
-    const certificate = await Certificate.create({
-      ...payload,
-      image: getPublicImageUrl(req.file),
-    });
+    const certificate = await Certificate.create(payload);
 
     return res.status(201).json(certificate);
   } catch (error) {
@@ -189,7 +186,10 @@ async function updateCertificate(req, res, next) {
       return res.status(400).json({ message: "ID no válido" });
     }
 
-    const { payload, validation } = buildCertificatePayload(req.body, { partial: true });
+    const body = { ...(req.body || {}) };
+    if (req.file) body.image = getPublicImageUrl(req.file);
+
+    const { payload, validation } = buildCertificatePayload(body, { partial: true });
     if (!validation.isValid) {
       if (req.file?.path) await removeUploadedFile(req.file.path).catch(() => undefined);
       return sendValidationError(res, validation);
@@ -204,7 +204,6 @@ async function updateCertificate(req, res, next) {
     const oldImage = certificate.image;
     if (req.file) {
       newImagePath = req.file.path;
-      payload.image = getPublicImageUrl(req.file);
     }
 
     Object.assign(certificate, payload);

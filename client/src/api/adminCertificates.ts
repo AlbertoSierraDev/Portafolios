@@ -3,7 +3,20 @@ import type {
   CertificateOrderItem,
 } from "../types/certificate";
 
-const API_URL = "/api/admin/certificates";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
+const API_URL = `${API_BASE_URL}/api/admin/certificates`;
+
+export type CertificatePayload = {
+  title: string;
+  issuer: string;
+  description: string;
+  image: string;
+  credentialUrl: string;
+  issueDate: string;
+  displayOrder: string;
+  visible: boolean;
+};
 
 async function parseResponse(response: Response) {
   const data = await response.json().catch(() => ({}));
@@ -20,11 +33,12 @@ export async function getAdminCertificates(): Promise<Certificate[]> {
   return parseResponse(response);
 }
 
-export async function createCertificate(formData: FormData): Promise<Certificate> {
+export async function createCertificate(payload: CertificatePayload): Promise<Certificate> {
   const response = await fetch(API_URL, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: formData,
+    body: JSON.stringify(payload),
   });
 
   return parseResponse(response);
@@ -32,12 +46,13 @@ export async function createCertificate(formData: FormData): Promise<Certificate
 
 export async function updateCertificate(
   id: string,
-  formData: FormData,
+  payload: CertificatePayload,
 ): Promise<Certificate> {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
+    headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: formData,
+    body: JSON.stringify(payload),
   });
 
   return parseResponse(response);
