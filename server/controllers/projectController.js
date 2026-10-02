@@ -1,9 +1,13 @@
 const Project = require("../models/Project");
+const {
+  listProjects,
+  findProjectBySlug,
+} = require("../services/projectService");
 const { validateProjectPayload } = require("../validators/projectValidator");
 
 const getProjects = async (req, res, next) => {
   try {
-    const projects = await Project.find().sort({ featured: -1, createdAt: -1 });
+    const projects = await listProjects();
     res.status(200).json(projects);
   } catch (error) {
     next(error);
@@ -12,7 +16,7 @@ const getProjects = async (req, res, next) => {
 
 const getProjectBySlug = async (req, res, next) => {
   try {
-    const project = await Project.findOne({ slug: req.params.slug });
+    const project = await findProjectBySlug(req.params.slug);
 
     if (!project) {
       return res.status(404).json({ message: "Proyecto no encontrado" });

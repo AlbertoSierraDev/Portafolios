@@ -55,6 +55,8 @@ temp/
 **/.env.*
 !**/.env.example
 !**/.env.sample
+local.settings.json
+**/local.settings.json
 *.key
 *.pem
 *.crt
