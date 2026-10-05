@@ -1,4 +1,6 @@
-const API_URL = "/api/contact";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+const PUBLIC_API_URL = `${API_BASE_URL}/api/contact`;
+const MANAGEMENT_API_URL = `${API_BASE_URL}/api/management/contact`;
 
 export type ContactFormData = {
   name: string;
@@ -20,7 +22,7 @@ export type ContactMessage = {
 };
 
 export async function sendContactMessage(data: ContactFormData) {
-  const response = await fetch(API_URL, {
+  const response = await fetch(PUBLIC_API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +40,7 @@ export async function sendContactMessage(data: ContactFormData) {
 }
 
 export async function getContactMessages() {
-  const response = await fetch(API_URL, {
+  const response = await fetch(MANAGEMENT_API_URL, {
     credentials: "include",
   });
 
@@ -50,7 +52,7 @@ export async function getContactMessages() {
 }
 
 export async function markContactMessageAsRead(id: string) {
-  const response = await fetch(`${API_URL}/${id}/read`, {
+  const response = await fetch(`${MANAGEMENT_API_URL}/${id}/read`, {
     method: "PATCH",
     credentials: "include",
   });
@@ -63,7 +65,7 @@ export async function markContactMessageAsRead(id: string) {
 }
 
 export async function deleteContactMessage(id: string) {
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${MANAGEMENT_API_URL}/${id}`, {
     method: "DELETE",
     credentials: "include",
   });
