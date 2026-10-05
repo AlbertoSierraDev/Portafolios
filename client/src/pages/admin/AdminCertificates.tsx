@@ -98,7 +98,7 @@ export default function AdminCertificates() {
   }
 
   async function handleDelete(id: string) {
-    if (!window.confirm("¿Seguro que quieres eliminar este certificado? También se eliminará su imagen.")) {
+    if (!window.confirm("¿Seguro que quieres eliminar este certificado? La imagen no se eliminará.")) {
       return;
     }
 
