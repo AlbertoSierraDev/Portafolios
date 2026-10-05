@@ -79,28 +79,28 @@ async function deleteAdminProjectFunction(request) {
 app.http("getAdminProjects", {
   methods: ["GET"],
   authLevel: "anonymous",
-  route: "admin/projects",
+  route: "management/projects",
   handler: getAdminProjects,
 });
 
 app.http("postAdminProject", {
   methods: ["POST"],
   authLevel: "anonymous",
-  route: "admin/projects",
+  route: "management/projects",
   handler: postAdminProject,
 });
 
 app.http("putAdminProject", {
   methods: ["PUT"],
   authLevel: "anonymous",
-  route: "admin/projects/{id}",
+  route: "management/projects/{id}",
   handler: putAdminProject,
 });
 
 app.http("deleteAdminProject", {
   methods: ["DELETE"],
   authLevel: "anonymous",
-  route: "admin/projects/{id}",
+  route: "management/projects/{id}",
   handler: deleteAdminProjectFunction,
 });
 
