@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import HeroSection from "../components/Home/HeroSection";
 import AboutPanels from "../components/Home/AboutPanels";
 import FeaturedProjectsSection from "../components/Home/FeaturedProjectsSection";
@@ -8,27 +6,8 @@ import ContactCTASection from "../components/Home/ContactCTASection";
 import CertificatesSection from "../components/Home/CertificatesSection";
 
 export default function Home() {
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
-
-    if (!mediaQuery.matches) {
-      return;
-    }
-
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = originalBodyOverflow;
-      document.documentElement.style.overflow = originalHtmlOverflow;
-    };
-  }, []);
-
   return (
-    <main className="min-h-screen md:h-screen md:overflow-y-auto md:scroll-smooth md:snap-y md:snap-proximity">
+    <main className="min-h-screen">
       <section className="min-h-screen md:snap-start">
         <HeroSection />
       </section>
