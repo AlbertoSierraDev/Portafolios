@@ -33,21 +33,21 @@ export default function AboutPanels() {
                     Nodo 01
                   </p>
 
-                  <h3 className="text-lg font-semibold text-white">
-                    Sobre mí
-                  </h3>
+                  <h3 className="text-lg font-semibold text-white">Sobre mí</h3>
                 </div>
               </div>
 
               <p className="w-full text-center text-sm leading-7 text-white/70">
-                Soy técnico IT con formación en Sistemas Microinformáticos y
-                Redes, enfocado en sistemas, redes y ciberseguridad. Cuento con
-                conocimientos de Windows, Linux, redes, soporte técnico y
-                administración de sistemas, además de experiencia con desarrollo
-                web, servidores y despliegues. Actualmente estoy profundizando
-                en ciberseguridad mediante formación, laboratorios y CTFs,
-                especialmente en seguridad web, enumeración, análisis de
-                servicios y escalada de privilegios en entornos controlados.
+                Soy Técnico de Soporte IT con formación en Sistemas
+                Microinformáticos y Redes y actualmente curso Administración de
+                Sistemas Informáticos en Red (ASIR). Cuento con experiencia
+                profesional en soporte a usuarios, gestión y resolución de
+                incidencias, además de conocimientos prácticos de Windows,
+                Linux, redes y administración de sistemas. Desarrollo proyectos
+                propios relacionados con Microsoft Azure, servidores, desarrollo
+                y automatización, que utilizo para seguir ampliando mis
+                conocimientos técnicos. Paralelamente, continúo formándome y
+                practicando ciberseguridad mediante laboratorios y CTFs.
               </p>
 
               <div className="mt-5 grid gap-4 border-t border-white/10 pt-5 sm:grid-cols-3">
@@ -57,7 +57,7 @@ export default function AboutPanels() {
                   </p>
 
                   <p className="mt-2 text-[11px] leading-5 text-white/70 md:text-sm">
-                    Sistemas Microinformáticos y Redes.
+                    Sistemas Microinformáticos y Redes · ASIR en curso
                   </p>
                 </div>
 
@@ -67,8 +67,8 @@ export default function AboutPanels() {
                   </p>
 
                   <p className="mt-2 text-[11px] leading-5 text-white/70 md:text-sm">
-                    Linux · Windows · Redes · Bash · Python · Git · JavaScript ·
-                    SQL
+                    Windows · Linux · Redes · Microsoft 365 · Active Directory ·
+                    Azure
                   </p>
                 </div>
 
@@ -78,8 +78,8 @@ export default function AboutPanels() {
                   </p>
 
                   <p className="mt-2 text-[11px] leading-5 text-white/70 md:text-sm">
-                    Seguir creciendo en sistemas y redes mientras avanzo hacia
-                    la ciberseguridad y el pentesting.
+                    Seguir creciendo en soporte y administración de sistemas,
+                    avanzando hacia cloud y ciberseguridad.
                   </p>
                 </div>
               </div>
@@ -106,23 +106,19 @@ export default function AboutPanels() {
                     Nodo 02
                   </p>
 
-                  <h3 className="text-lg font-semibold text-white">
-                    IA
-                  </h3>
+                  <h3 className="text-lg font-semibold text-white">IA</h3>
                 </div>
               </div>
 
               <p className="text-sm leading-7 text-white/70">
                 Utilizo la inteligencia artificial como herramienta para
-                aprender, investigar, analizar código y, especialmente,
-                automatizar procesos. Me interesa explorar el uso de agentes,
-                herramientas, APIs y diferentes flujos de automatización para
-                conectar tareas y crear soluciones que reduzcan trabajo manual.{" "}
-                <br />
-                Creo que la combinación de IA, programación y creatividad abre
-                un mundo de posibilidades: muchas tareas que antes requerían
-                procesos complejos pueden convertirse en sistemas automatizados
-                si encuentras la forma adecuada de conectar las piezas.
+                aprender, investigar, analizar código y automatizar procesos.
+                Trabajo con agentes, APIs y modelos locales para experimentar
+                con diferentes flujos de trabajo y desarrollar soluciones
+                propias. Integro la IA en mi forma de trabajar como apoyo para
+                resolver problemas, documentar, desarrollar y automatizar
+                tareas, manteniendo siempre la revisión y el criterio técnico
+                sobre los resultados.
               </p>
             </div>
           </motion.article>
@@ -154,15 +150,14 @@ export default function AboutPanels() {
               </div>
 
               <p className="text-sm leading-7 text-white/70">
-                Practico ciberseguridad y pentesting en laboratorios y CTFs,
-                trabajando con Linux, Windows, redes y seguridad web. <br />
-                Utilizo herramientas como Burp Suite, Nmap, Wireshark, ffuf,
-                Metasploit y Ghidra, pero intento ir más allá de simplemente
-                utilizarlas. <br />
-                Me gusta entender cómo funcionan los sistemas y aplicaciones,
-                analizar lo que ocurre detrás y, cuando me encuentro con un
-                problema, crear mis propias soluciones, scripts o herramientas
-                con Bash y Python para resolverlo o automatizar el proceso.
+                Practico ciberseguridad en laboratorios y CTFs, trabajando
+                principalmente con Linux, redes, seguridad web y análisis de
+                servicios. Utilizo herramientas como Burp Suite, Nmap,
+                Wireshark, ffuf y Metasploit para reconocimiento, enumeración y
+                análisis de vulnerabilidades en entornos controlados. También
+                desarrollo scripts y herramientas propias con Bash y Python para
+                automatizar tareas y comprender mejor el funcionamiento interno
+                de sistemas y aplicaciones.
               </p>
             </div>
           </motion.article>

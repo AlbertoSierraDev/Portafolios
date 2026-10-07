@@ -4,7 +4,6 @@ import {
   FaNodeJs,
   FaJs,
   FaLinux,
-  FaGitAlt,
   FaWindows,
   FaNetworkWired,
   FaTerminal,
@@ -12,17 +11,16 @@ import {
   FaHeadset,
   FaDocker,
   FaCode,
-  FaKey,
-  FaClipboardList,
   FaBrain,
   FaShieldAlt,
   FaPython,
+  FaCloud,
+  FaHdd,
 } from "react-icons/fa";
 
 import {
   SiExpress,
   SiMysql,
-  SiPostgresql,
   SiGithub,
   SiNginx,
   SiBurpsuite,
@@ -33,26 +31,37 @@ import SectionHeader from "../SectionHeader";
 
 export default function SkillsSection() {
   const reducedMotion = useReducedMotion();
-  const cybersecurity = [
-    { name: "Burp Suite", icon: SiBurpsuite },
-    { name: "Nmap", icon: FaNetworkWired },
-    { name: "Wireshark", icon: SiWireshark },
-    { name: "Metasploit", icon: FaTerminal },
-    { name: "Ghidra", icon: FaCode },
-    { name: "Kali Linux", icon: FaLinux },
-    { name: "Bash", icon: FaTerminal },
-    { name: "Python", icon: FaPython },
-  ];
-
   const systems = [
     { name: "Windows", icon: FaWindows },
     { name: "Linux", icon: FaLinux },
-    { name: "Redes", icon: FaNetworkWired },
+    { name: "Microsoft 365", icon: FaCloud },
     { name: "Active Directory", icon: FaServer },
-    { name: "SSH", icon: FaTerminal },
-    { name: "Nginx", icon: SiNginx },
-    { name: "VPS", icon: FaServer },
+    { name: "Redes", icon: FaNetworkWired },
     { name: "Soporte IT", icon: FaHeadset },
+    { name: "PowerShell", icon: FaTerminal },
+    { name: "SSH", icon: FaTerminal },
+  ];
+
+  const cloud = [
+    { name: "Microsoft Azure", icon: FaCloud },
+    { name: "Nginx", icon: SiNginx },
+    { name: "Docker", icon: FaDocker },
+    { name: "VPS", icon: FaServer },
+    { name: "DNS", icon: FaNetworkWired },
+    { name: "VirtualBox", icon: FaHdd },
+    { name: "GitHub Actions / CI/CD", icon: SiGithub },
+    { name: "Servidores Linux", icon: FaLinux },
+  ];
+
+  const cybersecurity = [
+    { name: "Kali Linux", icon: FaLinux },
+    { name: "Nmap", icon: FaNetworkWired },
+    { name: "Wireshark", icon: SiWireshark },
+    { name: "Burp Suite", icon: SiBurpsuite },
+    { name: "Metasploit", icon: FaTerminal },
+    { name: "Bash", icon: FaTerminal },
+    { name: "Python", icon: FaPython },
+    { name: "Seguridad web", icon: FaShieldAlt },
   ];
 
   const development = [
@@ -62,27 +71,15 @@ export default function SkillsSection() {
     { name: "Express", icon: SiExpress },
     { name: "APIs REST", icon: FaCode },
     { name: "MySQL", icon: SiMysql },
-    { name: "PostgreSQL", icon: SiPostgresql },
-    { name: "JWT", icon: FaKey },
-  ];
-
-  const tools = [
-    { name: "Git", icon: FaGitAlt },
-    { name: "GitHub", icon: SiGithub },
-    { name: "Docker", icon: FaDocker },
-    { name: "Terminal", icon: FaTerminal },
+    { name: "Git / GitHub", icon: SiGithub },
     { name: "IA aplicada", icon: FaBrain },
-    { name: "Automatización", icon: FaCode },
-    { name: "Logs", icon: FaClipboardList },
-    { name: "Scripting", icon: FaTerminal },
   ];
-
 
   const categories = [
-    { title: "Ciberseguridad", label: "Seguridad ofensiva", icon: FaShieldAlt, skills: cybersecurity, accent: "text-cyan-300", border: "border-cyan-300/15" },
-    { title: "Sistemas y Redes", label: "Infraestructura", icon: FaServer, skills: systems, accent: "text-lime-400", border: "border-lime-400/15" },
-    { title: "Desarrollo y Backend", label: "Desarrollo complementario", icon: FaCode, skills: development, accent: "text-cyan-300", border: "border-cyan-300/15" },
-    { title: "Tools y Automatización", label: "Herramientas y productividad", icon: FaBrain, skills: tools, accent: "text-fuchsia-300", border: "border-fuchsia-300/15" },
+    { title: "Sistemas y Soporte IT", label: "Soporte e infraestructura", icon: FaHeadset, skills: systems, accent: "text-lime-400", border: "border-lime-400/15" },
+    { title: "Cloud e Infraestructura", label: "Cloud y despliegue", icon: FaCloud, skills: cloud, accent: "text-cyan-300", border: "border-cyan-300/15" },
+    { title: "Ciberseguridad", label: "Seguridad informática", icon: FaShieldAlt, skills: cybersecurity, accent: "text-cyan-300", border: "border-cyan-300/15" },
+    { title: "Desarrollo y Automatización", label: "Desarrollo complementario", icon: FaCode, skills: development, accent: "text-fuchsia-300", border: "border-fuchsia-300/15" },
   ];
 
   return (

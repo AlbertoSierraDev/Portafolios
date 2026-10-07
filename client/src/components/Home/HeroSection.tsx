@@ -37,8 +37,9 @@ export default function HeroSection() {
           transition={{ duration: 0.45, delay: 0.1, ease: "easeOut" }}
           className="mx-auto w-full max-w-6xl text-center"
         >
-          <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.22em] text-lime-400 sm:text-[10px] md:mb-5 md:text-xs md:tracking-[0.42em]">
-            SISTEMAS · REDES · CIBERSEGURIDAD
+          <p className="relative mx-auto mb-3 w-fit max-w-full pb-3 text-[9px] font-semibold uppercase tracking-[0.22em] text-lime-400 sm:text-[10px] md:mb-5 md:text-xl md:tracking-[0.42em]">
+            Alberto Sierra Perez
+            <span aria-hidden="true" className="absolute bottom-0 left-5 right-5 h-px bg-lime-400/40" />
           </p>
 
           <h1 className="mb-4 break-words text-3xl font-black uppercase leading-tight text-white sm:text-4xl md:mb-5 md:text-3xl lg:text-5xl">
@@ -48,15 +49,17 @@ export default function HeroSection() {
 
           <div className="mx-auto mb-6 max-w-5xl text-center md:mb-8">
             <p className="text-sm leading-7 text-white/70 lg:text-base lg:leading-8">
-              Soy técnico IT con formación en sistemas y redes, orientando mi
-              carrera hacia la ciberseguridad y el pentesting. Me interesa
-              entender cómo funcionan los sistemas, redes y aplicaciones para
-              identificar sus debilidades y comprender la seguridad desde su
-              base. Practico en laboratorios y CTFs trabajando con Linux,
-              Windows, redes, seguridad web y herramientas como Burp Suite, Nmap
-              y Wireshark. Además, cuento con conocimientos de desarrollo web,
-              scripting y servidores, que utilizo como base para comprender
-              mejor las aplicaciones y automatizar procesos.
+              Soy Técnico de Soporte IT con formación en sistemas y redes, y
+              actualmente continúo especializándome en administración de
+              sistemas, cloud y ciberseguridad. Tengo experiencia profesional en
+              soporte a usuarios y resolución de incidencias, y complemento mi
+              formación con proyectos propios en Windows, Linux, redes y
+              Microsoft Azure. También practico ciberseguridad en laboratorios y
+              CTFs utilizando herramientas como Burp Suite, Nmap y Wireshark.
+              Mis conocimientos de desarrollo, servidores y scripting me
+              permiten comprender mejor cómo funcionan las aplicaciones y
+              sistemas, automatizar procesos y abordar los problemas desde una
+              perspectiva más completa.
             </p>
           </div>
 
