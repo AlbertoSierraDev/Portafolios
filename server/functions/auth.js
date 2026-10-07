@@ -9,6 +9,7 @@ const {
   validateAdminCredentials,
 } = require("../services/authService");
 const { toJsonResponse, toErrorResponse } = require("./httpResponse");
+const rateLimit = require("../services/rateLimitService");
 
 async function readJsonBody(request) {
   try {
@@ -21,6 +22,9 @@ async function readJsonBody(request) {
 async function loginAdmin(request) {
   try {
     const { username, password } = await readJsonBody(request);
+
+    const limited = await rateLimit.enforceLoginRateLimit(request, username);
+    if (limited) return limited;
 
     if (!validateAdminCredentials(username, password)) {
       return toJsonResponse({ message: "Credenciales incorrectas" }, 401);

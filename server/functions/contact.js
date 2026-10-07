@@ -12,6 +12,7 @@ const {
 } = require("../services/contactService");
 const { requireAdmin } = require("../services/authService");
 const { toJsonResponse } = require("./httpResponse");
+const rateLimit = require("../services/rateLimitService");
 
 async function readJsonBody(request) {
   const contentType = request.headers.get("content-type") || "";
@@ -49,8 +50,21 @@ async function postContact(request) {
   try {
     const { data, turnstileToken } = prepareContactSubmission(await readJsonBody(request));
     await verifyTurnstileToken(turnstileToken);
-    await connectDB({ exitOnFailure: false });
-    const contactMessage = await createContactMessage(data);
+    const limited = await rateLimit.enforceContactRateLimit(request);
+    if (limited) return limited;
+    let contactMessage;
+    try {
+      await connectDB({ exitOnFailure: false });
+      contactMessage = await createContactMessage(data);
+    } catch (error) {
+      if (error.name === "ValidationError") throw error;
+      console.error("Contact storage unavailable");
+      return {
+        status: 503,
+        headers: { "Retry-After": "60" },
+        jsonBody: { message: "Servicio temporalmente no disponible. Intentalo mas tarde." },
+      };
+    }
     return toJsonResponse({ message: "Mensaje enviado correctamente.", contactMessage }, 201);
   } catch (error) {
     return toContactErrorResponse(error);
