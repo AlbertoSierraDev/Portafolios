@@ -83,10 +83,10 @@ export default function SkillsSection() {
   ];
 
   return (
-    <section className="relative px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14">
-      <div className="mx-auto w-full max-w-[1400px]">
+    <section className="relative px-4 py-10 sm:px-5 sm:py-12 md:px-6 lg:py-4">
+      <div className="mx-auto w-full max-w-[1500px]">
         <SectionHeader eyebrow="Competencias técnicas" title="Skills & Tools" description="Tecnologías, herramientas y conocimientos que utilizo en sistemas, redes, desarrollo, automatización y ciberseguridad." centered />
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {categories.map((category, index) => {
             const CategoryIcon = category.icon;
             return (
@@ -94,22 +94,24 @@ export default function SkillsSection() {
                 initial={reducedMotion ? false : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
-                className={`min-w-0 rounded-lg border ${category.border} bg-white/[0.035] p-4 backdrop-blur-xl md:p-5`}>
-                <div className="mb-3 flex items-center justify-center gap-3 border-b border-white/10 pb-3 text-center">
-                  <CategoryIcon aria-hidden="true" className={`shrink-0 text-xl ${category.accent}`} />
-                  <div className="min-w-0">
-                    <p className="text-[10px] leading-5 text-white/50">{category.label}</p>
-                    <h3 className="break-words text-base font-semibold text-white">{category.title}</h3>
+                className={`group relative min-w-0 overflow-hidden rounded-lg border ${category.border} bg-white/[0.035] p-4 backdrop-blur-xl transition-colors duration-300 hover:bg-white/[0.055] sm:p-6 lg:p-4 lg:px-5 ${category.accent}`}>
+                <span aria-hidden="true" className="absolute left-4 right-4 top-0 h-px bg-current opacity-40 transition-opacity duration-300 group-hover:opacity-80 sm:left-6 sm:right-6 lg:left-4 lg:right-4" />
+                <div className="mb-2 flex items-start gap-3 border-b border-white/10 pb-5 sm:gap-4 lg:pb-3">
+                  <CategoryIcon aria-hidden="true" className="mt-1 shrink-0 text-2xl" />
+                  <div className="min-w-0 flex-1">
+                    <h3 className="break-words text-base font-semibold leading-6 text-white lg:text-[19px]">{category.title}</h3>
+                    <p className="mt-1 text-xs leading-5 text-white/50">{category.label}</p>
                   </div>
+                  <span aria-hidden="true" className="shrink-0 pt-1 font-mono text-xs tabular-nums text-white/25">{String(index + 1).padStart(2, "0")}</span>
                 </div>
-                <ul className="grid grid-cols-2 gap-x-3 gap-y-2 sm:grid-cols-4">
+                <ul className="grid grid-cols-2 gap-x-3 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-3">
                   {category.skills.map((skill) => {
                     const Icon = skill.icon;
                     return (
                       <motion.li key={skill.name} whileHover={reducedMotion ? undefined : { y: -2 }}
-                        transition={{ duration: 0.15 }} className="flex min-w-0 flex-col items-center gap-1.5 py-1 text-center">
-                        <Icon aria-hidden="true" className={`text-xl ${category.accent}`} />
-                        <span className="min-h-10 max-w-full break-words text-xs leading-5 text-white/75">{skill.name}</span>
+                        transition={{ duration: 0.15 }} className="flex min-h-16 min-w-0 items-center gap-2.5 border-b border-white/[0.06] py-3 transition-colors duration-200 hover:border-current hover:text-white motion-reduce:transition-none sm:gap-3 lg:min-h-[68px] lg:flex-col lg:justify-center lg:gap-1.5 lg:py-1 lg:text-center">
+                        <Icon aria-hidden="true" className={`shrink-0 text-lg ${category.accent}`} />
+                        <span className="min-w-0 break-words text-xs font-medium leading-5 text-white/75 sm:text-sm lg:text-[13px] lg:leading-4">{skill.name}</span>
                       </motion.li>
                     );
                   })}
