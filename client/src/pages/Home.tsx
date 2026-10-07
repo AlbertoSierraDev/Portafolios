@@ -8,27 +8,27 @@ import CertificatesSection from "../components/Home/CertificatesSection";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <section className="min-h-screen md:snap-start">
+      <section>
         <HeroSection />
       </section>
 
-      <section className="min-h-screen md:snap-start">
+      <section>
         <AboutPanels />
       </section>
 
-      <section className="min-h-screen md:snap-start">
+      <section>
         <CertificatesSection />
       </section>
 
-      <section className="min-h-screen md:snap-start">
+      <section>
         <FeaturedProjectsSection />
       </section>
 
-      <section className="min-h-screen md:snap-start">
+      <section>
         <SkillsSection />
       </section>
 
-      <section className="min-h-screen md:snap-start">
+      <section>
         <ContactCTASection />
       </section>
     </main>

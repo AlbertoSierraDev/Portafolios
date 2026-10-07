@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 3px;
+}
+
 .grid-rain-drop {
   width: 1px;
   height: 120px;
@@ -185,5 +191,12 @@
       transform: translateX(calc(100vw + 160px));
       opacity: 0;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-rain-drop,
+  .grid-rain-drop-horizontal {
+    animation: none;
   }
 }

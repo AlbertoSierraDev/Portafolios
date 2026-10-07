@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import {
   HiOutlineArrowRight,
@@ -10,6 +10,7 @@ import {
   HiOutlineShieldCheck,
 } from "react-icons/hi2";
 import { FaLinkedin } from "react-icons/fa";
+import { visual } from "../styles/visual";
 import { sendContactMessage } from "../api/contact";
 
 const EMAIL = "alberto.s.perez.asp@gmail.com";
@@ -17,6 +18,7 @@ const LINKEDIN_URL =
   "https://www.linkedin.com/in/alberto-sierra-perez-44811a38a/";
 
 export default function Contact() {
+  const reducedMotion = useReducedMotion();
   const turnstileRef = useRef<TurnstileInstance>(null);
 
   const [formData, setFormData] = useState({
@@ -97,19 +99,19 @@ export default function Contact() {
   const isSubmitDisabled = status === "sending" || !turnstileToken;
 
   return (
-    <main className="relative min-h-screen px-4 py-24 text-white sm:px-5 md:px-10 md:py-24">
+    <main className="relative min-h-screen px-4 pb-16 pt-28 text-white sm:px-5 md:px-10 md:pb-20 md:pt-32">
       <section className="mx-auto max-w-[1500px]">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={reducedMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="mb-9 md:mb-14"
+          className="mb-6 border-b border-white/10 pb-5 md:mb-7"
         >
           <p className="mb-2 text-[9px] uppercase tracking-[0.28em] text-cyan-300 md:mb-3 md:text-[11px] md:tracking-[0.4em]">
             Contacto
           </p>
 
-          <h1 className="max-w-4xl text-3xl font-black uppercase leading-[1.05] text-white sm:text-4xl md:text-5xl">
+          <h1 className="max-w-4xl text-2xl font-black uppercase leading-tight text-white sm:text-3xl md:text-4xl">
             HABLEMOS DE TECNOLOGÍA, PROYECTOS Y OPORTUNIDADES
           </h1>
 
@@ -121,24 +123,24 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
+        <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
           <motion.form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 28 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
-            className="relative overflow-hidden rounded-[22px] border border-cyan-300/15 bg-white/[0.04] p-5 backdrop-blur-xl shadow-[0_0_35px_rgba(34,211,238,0.08)] sm:p-6 md:rounded-[32px] md:p-8 md:shadow-[0_0_45px_rgba(34,211,238,0.08)]"
+            className="relative min-w-0 overflow-hidden rounded-lg border border-cyan-300/15 bg-white/[0.035] p-5 backdrop-blur-xl sm:p-6 md:p-8"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.1),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(232,121,249,0.1),transparent_38%)]" />
 
             <div className="relative z-10">
               <div className="mb-6 flex items-center gap-3 md:mb-8">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[16px] border border-cyan-300/20 bg-cyan-300/10 text-cyan-300 md:h-12 md:w-12 md:rounded-2xl">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-cyan-300/20 bg-cyan-300/10 text-cyan-300 md:h-12 md:w-12">
                   <HiOutlineChatBubbleBottomCenterText className="text-xl md:text-2xl" />
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-semibold uppercase tracking-[0.08em] text-white md:text-2xl">
+                  <h2 className="text-lg font-semibold text-white md:text-xl">
                     Enviar mensaje
                   </h2>
 
@@ -166,7 +168,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="Tu nombre"
-                      className="w-full rounded-2xl border border-white/10 bg-black/20 px-11 py-3.5 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/50 focus:bg-cyan-300/5 md:px-12 md:py-4"
+                      className={`${visual.input} pl-11 pr-4`}
                     />
                   </div>
                 </label>
@@ -186,7 +188,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="email@empresa.com"
-                      className="w-full rounded-2xl border border-white/10 bg-black/20 px-11 py-3.5 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/50 focus:bg-cyan-300/5 md:px-12 md:py-4"
+                      className={`${visual.input} pl-11 pr-4`}
                     />
                   </div>
                 </label>
@@ -204,7 +206,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   placeholder="Oferta, entrevista, oportunidad laboral..."
-                  className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/50 focus:bg-cyan-300/5 md:px-5 md:py-4"
+                  className={`${visual.input} px-4`}
                 />
               </label>
 
@@ -220,11 +222,11 @@ export default function Contact() {
                   required
                   rows={6}
                   placeholder="Cuéntame sobre la oportunidad o el proceso de selección..."
-                  className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm leading-6 text-white outline-none transition placeholder:text-white/25 focus:border-cyan-300/50 focus:bg-cyan-300/5 md:px-5 md:py-4 md:leading-7"
+                  className={`${visual.input} resize-y px-4 leading-7`}
                 />
               </label>
 
-              <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-3 md:mt-6 md:p-4">
+              <div className="mt-5 overflow-hidden rounded-md border border-white/10 bg-black/20 p-3 md:mt-6 md:p-4">
                 <div className="mb-3 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45 md:text-xs md:tracking-[0.2em]">
                   <HiOutlineShieldCheck className="text-base text-lime-400 md:text-lg" />
                   Verificación anti-bots
@@ -263,13 +265,13 @@ export default function Contact() {
               </div>
 
               {status === "success" && (
-                <p className="mt-5 rounded-2xl border border-lime-400/20 bg-lime-400/10 px-4 py-3 text-sm font-medium text-lime-400 md:px-5 md:py-4">
+                <p className="mt-5 rounded-md border border-lime-400/20 bg-lime-400/10 px-4 py-3 text-sm font-medium text-lime-400 md:px-5 md:py-4">
                   Mensaje enviado correctamente. Gracias por contactar conmigo.
                 </p>
               )}
 
               {status === "error" && (
-                <p className="mt-5 rounded-2xl border border-fuchsia-300/20 bg-fuchsia-300/10 px-4 py-3 text-sm font-medium text-fuchsia-300 md:px-5 md:py-4">
+                <p className="mt-5 rounded-md border border-fuchsia-300/20 bg-fuchsia-300/10 px-4 py-3 text-sm font-medium text-fuchsia-300 md:px-5 md:py-4">
                   {error}
                 </p>
               )}
@@ -277,13 +279,10 @@ export default function Contact() {
               <motion.button
                 type="submit"
                 disabled={isSubmitDisabled}
-                whileHover={{
-                  scale: isSubmitDisabled ? 1 : 1.02,
-                  y: isSubmitDisabled ? 0 : -2,
-                }}
-                whileTap={{ scale: isSubmitDisabled ? 1 : 0.98 }}
+                whileHover={reducedMotion || isSubmitDisabled ? undefined : { y: -2 }}
+                whileTap={reducedMotion || isSubmitDisabled ? undefined : { scale: 0.98 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md border border-cyan-200/60 bg-cyan-200 px-5 py-3.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0D0221] shadow-[0_0_24px_rgba(103,232,249,0.45)] transition hover:bg-cyan-100 disabled:cursor-not-allowed disabled:opacity-60 md:mt-7 md:w-auto md:gap-3 md:px-8 md:py-4 md:text-sm md:tracking-[0.28em]"
+                className={`${visual.button} mt-6 w-full md:w-auto`}
               >
                 {status === "sending" ? "Enviando..." : "Enviar mensaje"}
                 <HiOutlineArrowRight className="text-base md:text-lg" />
@@ -292,20 +291,20 @@ export default function Contact() {
           </motion.form>
 
           <motion.aside
-            initial={{ opacity: 0, y: 28 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.16, ease: "easeOut" }}
-            className="grid gap-5 md:gap-6"
+            className="grid min-w-0 gap-4"
           >
-            <div className="relative overflow-hidden rounded-[22px] border border-lime-400/15 bg-white/[0.04] p-5 backdrop-blur-xl shadow-[0_0_30px_rgba(163,230,53,0.08)] md:rounded-[32px] md:p-7 md:shadow-[0_0_35px_rgba(163,230,53,0.08)]">
+            <div className="relative overflow-hidden rounded-lg border border-lime-400/15 bg-white/[0.035] p-5 backdrop-blur-xl md:p-7">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(163,230,53,0.1),transparent_35%)]" />
 
               <div className="relative z-10">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-[16px] border border-lime-400/20 bg-lime-400/10 text-lime-400 md:mb-5 md:h-12 md:w-12 md:rounded-2xl">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-lime-400/20 bg-lime-400/10 text-lime-400 md:mb-5 md:h-12 md:w-12">
                   <HiOutlineBriefcase className="text-xl md:text-2xl" />
                 </div>
 
-                <h2 className="text-xl font-semibold uppercase tracking-[0.08em] text-white md:text-2xl">
+                <h2 className="text-lg font-semibold text-white md:text-xl">
                   Disponibilidad
                 </h2>
 
@@ -319,7 +318,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-[22px] border border-cyan-300/15 bg-white/[0.04] p-5 backdrop-blur-xl shadow-[0_0_30px_rgba(34,211,238,0.08)] md:rounded-[32px] md:p-7 md:shadow-[0_0_35px_rgba(34,211,238,0.08)]">
+            <div className="relative overflow-hidden rounded-lg border border-cyan-300/15 bg-white/[0.035] p-5 backdrop-blur-xl md:p-7">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.1),transparent_35%)]" />
 
               <div className="relative z-10">
@@ -330,7 +329,7 @@ export default function Contact() {
                 <div className="flex flex-col gap-3 md:gap-4">
                   <a
                     href={`mailto:${EMAIL}`}
-                    className="group flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 transition hover:border-cyan-300/40 hover:bg-cyan-300/5 md:gap-4 md:px-5 md:py-4"
+                    className="group flex items-center justify-between gap-3 rounded-md border border-white/10 bg-black/20 px-4 py-3 transition hover:border-cyan-300/40 hover:bg-cyan-300/5 md:gap-4 md:px-5 md:py-4"
                   >
                     <span className="min-w-0">
                       <span className="block text-[10px] uppercase tracking-[0.18em] text-white/40 md:text-xs md:tracking-[0.22em]">
@@ -341,14 +340,14 @@ export default function Contact() {
                       </span>
                     </span>
 
-                    <HiOutlineEnvelope className="shrink-0 text-xl text-cyan-300 transition group-hover:scale-110 md:text-2xl" />
+                    <HiOutlineEnvelope className="shrink-0 text-xl text-cyan-300 transition motion-safe:group-hover:scale-105 md:text-2xl" />
                   </a>
 
                   <a
                     href={LINKEDIN_URL}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 transition hover:border-fuchsia-300/40 hover:bg-fuchsia-300/5 md:gap-4 md:px-5 md:py-4"
+                    className="group flex items-center justify-between gap-3 rounded-md border border-white/10 bg-black/20 px-4 py-3 transition hover:border-fuchsia-300/40 hover:bg-fuchsia-300/5 md:gap-4 md:px-5 md:py-4"
                   >
                     <span className="min-w-0">
                       <span className="block text-[10px] uppercase tracking-[0.18em] text-white/40 md:text-xs md:tracking-[0.22em]">
@@ -359,7 +358,7 @@ export default function Contact() {
                       </span>
                     </span>
 
-                    <FaLinkedin className="shrink-0 text-xl text-fuchsia-300 transition group-hover:scale-110 md:text-2xl" />
+                    <FaLinkedin className="shrink-0 text-xl text-fuchsia-300 transition motion-safe:group-hover:scale-105 md:text-2xl" />
                   </a>
                 </div>
               </div>

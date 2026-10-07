@@ -8,6 +8,8 @@ import {
 } from "react-icons/hi2";
 import { getCertificates } from "../../api/certificates";
 import type { PublicCertificate } from "../../types/certificate";
+import SectionHeader from "../SectionHeader";
+import ContentState from "../ContentState";
 import CertificateModal from "../CertificateModal";
 
 function formatIssueDate(value: string | null) {
@@ -21,15 +23,22 @@ function formatIssueDate(value: string | null) {
 
 export default function CertificatesSection() {
   const [certificates, setCertificates] = useState<PublicCertificate[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [slide, setSlide] = useState({ position: 0, previous: 0 });
   const [selectedCertificate, setSelectedCertificate] = useState<PublicCertificate | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
+  const [isHidden, setIsHidden] = useState(() => document.hidden);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
   const touchStart = useRef<{ x: number; y: number } | null>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const suppressClick = useRef(false);
+  const activeIndex = certificates.length
+    ? ((slide.position % certificates.length) + certificates.length) % certificates.length
+    : 0;
+  const isPaused = isHovered || isFocused || isTouching || isHidden;
 
   useEffect(() => {
     let isMounted = true;
@@ -60,7 +69,7 @@ export default function CertificatesSection() {
   }, []);
 
   useEffect(() => {
-    const handleVisibilityChange = () => setIsPaused(document.visibilityState !== "visible");
+    const handleVisibilityChange = () => setIsHidden(document.hidden);
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
@@ -68,56 +77,78 @@ export default function CertificatesSection() {
   useEffect(() => {
     if (certificates.length < 2 || isPaused || isReducedMotion || selectedCertificate) return;
 
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % certificates.length);
+    const timer = window.setTimeout(() => {
+      setSlide((current) => ({ position: current.position + 1, previous: current.position }));
     }, 6000);
 
-    return () => window.clearInterval(timer);
-  }, [certificates.length, isPaused, isReducedMotion, selectedCertificate]);
+    return () => window.clearTimeout(timer);
+  }, [certificates.length, isPaused, isReducedMotion, selectedCertificate, slide.position]);
 
   if (loading) {
     return (
-      <section className="flex min-h-screen snap-start flex-col justify-start px-4 py-8 sm:px-5 sm:py-10 md:justify-center md:px-10 md:py-12">
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="mb-6 h-20 max-w-2xl animate-pulse rounded-2xl bg-white/[0.04]" />
-          <div className="h-[300px] animate-pulse rounded-[28px] border border-white/10 bg-white/[0.04]" />
+      <section className="px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14">
+        <div className="mx-auto w-full max-w-7xl">
+          <SectionHeader eyebrow="Formación" title="Certificados" centered />
+          <ContentState kind="loading" message="Cargando certificados..." />
         </div>
       </section>
     );
   }
 
-  if (error || certificates.length === 0) return null;
+  if (error || certificates.length === 0) {
+    return (
+      <section className="px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14">
+        <div className="mx-auto w-full max-w-7xl">
+          <SectionHeader eyebrow="Formación" title="Certificados" centered />
+          <ContentState kind={error ? "error" : "empty"} message={error ? "No se pudieron cargar los certificados." : "Todavía no hay certificados publicados."} />
+        </div>
+      </section>
+    );
+  }
 
   const certificate = certificates[activeIndex] || certificates[0];
   const hasNavigation = certificates.length > 1;
 
   function move(direction: -1 | 1) {
-    setActiveIndex((current) => (current + direction + certificates.length) % certificates.length);
+    setSlide((current) => ({ position: current.position + direction, previous: current.position }));
+  }
+
+  function selectIndex(index: number) {
+    let distance = index - activeIndex;
+    if (distance > certificates.length / 2) distance -= certificates.length;
+    if (distance < -certificates.length / 2) distance += certificates.length;
+    setSlide((current) => ({ position: current.position + distance, previous: current.position }));
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.target !== event.currentTarget || !hasNavigation) return;
-    if (event.key === "ArrowLeft") move(-1);
-    if (event.key === "ArrowRight") move(1);
+    if (!hasNavigation || selectedCertificate) return;
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      move(event.key === "ArrowLeft" ? -1 : 1);
+    }
   }
 
   function handleTouchStart(event: React.TouchEvent<HTMLDivElement>) {
     touchStart.current = { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
-    setIsPaused(true);
+    suppressClick.current = false;
+    setIsTouching(true);
   }
 
   function handleTouchEnd(event: React.TouchEvent<HTMLDivElement>) {
     if (!touchStart.current || !hasNavigation) {
       touchStart.current = null;
-      setIsPaused(false);
+      setIsTouching(false);
       return;
     }
 
     const deltaX = event.changedTouches[0].clientX - touchStart.current.x;
     const deltaY = event.changedTouches[0].clientY - touchStart.current.y;
-    if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) move(deltaX < 0 ? 1 : -1);
+    if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      suppressClick.current = true;
+      move(deltaX < 0 ? 1 : -1);
+    }
     touchStart.current = null;
-    setIsPaused(false);
+    setIsTouching(false);
   }
 
   function markImageAsFailed(id: string) {
@@ -125,46 +156,77 @@ export default function CertificatesSection() {
   }
 
   return (
-    <section className="flex min-h-screen snap-start flex-col justify-start px-4 py-8 sm:px-5 sm:py-10 md:justify-center md:px-10 md:py-12">
-      <div className="mx-auto w-full max-w-6xl">
-        <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.45, ease: "easeOut" }} className="mb-6 flex flex-col gap-4 md:mb-8 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="mb-2 text-[9px] uppercase tracking-[0.28em] text-lime-400 md:mb-3 md:text-[11px] md:tracking-[0.4em]">Formación</p>
-            <h2 className="text-2xl font-black uppercase leading-tight text-white sm:text-3xl md:text-5xl">CERTIFICADOS</h2>
-            <p className="mt-3 max-w-2xl text-[13px] leading-6 text-white/70 sm:text-sm md:mt-4 md:text-base md:leading-7">Credenciales y formación que respaldan mi recorrido técnico.</p>
+    <section className="px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14">
+      <div className="mx-auto w-full max-w-7xl">
+        <SectionHeader eyebrow="Formación" title="Certificados" centered />
+
+        <div role="region" aria-roledescription="carrusel" aria-label="Certificados" tabIndex={0}
+          onKeyDown={handleKeyDown} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+          onFocus={() => setIsFocused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
+          className="relative outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70">
+          <div className="relative isolate h-[225px] touch-pan-y overflow-hidden sm:h-[290px] md:h-[340px] lg:h-[375px]"
+            onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
+            onTouchCancel={() => { touchStart.current = null; setIsTouching(false); }}>
+            {/* Virtual slots preserve image identity while sliding through the loop. */}
+            {(hasNavigation ? [-2, -1, 0, 1, 2] : [0]).map((offset) => {
+              const position = slide.position + offset;
+              const index = ((position % certificates.length) + certificates.length) % certificates.length;
+              const item = certificates[index];
+              const isActive = offset === 0;
+              const isVisible = Math.abs(offset) <= 1;
+              const previousOffset = position - slide.previous;
+
+              return (
+                <motion.button key={position} type="button" tabIndex={isActive ? 0 : -1}
+                  aria-hidden={!isVisible} aria-label={isActive ? `Abrir certificado ${item.title}` : `Seleccionar certificado ${item.title}`}
+                  initial={{ x: `${previousOffset * 86 - 50}%`, scale: previousOffset === 0 ? 1 : 0.8, opacity: Math.abs(previousOffset) > 1 ? 0 : previousOffset === 0 ? 1 : 0.45 }}
+                  animate={{ x: `${offset * 86 - 50}%`, scale: isActive ? 1 : 0.8, opacity: isActive ? 1 : isVisible ? 0.45 : 0 }}
+                  transition={{ duration: isReducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ zIndex: isActive ? 20 : 10, pointerEvents: isVisible ? "auto" : "none" }}
+                  onClick={() => {
+                    if (suppressClick.current) { suppressClick.current = false; return; }
+                    if (isActive) setSelectedCertificate(item);
+                    else setSlide((current) => ({ position, previous: current.position }));
+                  }}
+                  className={`absolute left-1/2 top-4 flex h-[calc(100%-2rem)] w-[76%] items-center justify-center rounded-lg border bg-white/[0.035] p-2 outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 sm:w-[62%] sm:p-3 md:w-[48%] md:p-4 ${isActive ? "border-cyan-300/40 shadow-[0_0_32px_rgba(34,211,238,0.12)]" : "border-white/15"}`}>
+                  {failedImages.has(item._id)
+                    ? <HiOutlinePhoto className="text-6xl text-cyan-300/50" />
+                    : <img src={item.image} alt={item.title} draggable={false} loading={isVisible ? "eager" : "lazy"}
+                        onError={() => markImageAsFailed(item._id)} className="h-full w-full object-contain" />}
+                </motion.button>
+              );
+            })}
           </div>
-          <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/45"><HiOutlineAcademicCap className="text-lg text-lime-400" />{activeIndex + 1} / {certificates.length}</div>
-        </motion.div>
 
-        <div ref={sectionRef} role="region" aria-roledescription="carrusel" aria-label="Certificados" tabIndex={0} onKeyDown={handleKeyDown} onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)} onFocus={() => setIsPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false); }} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} className="relative outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={certificate._id} initial={isReducedMotion ? false : { opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={isReducedMotion ? undefined : { opacity: 0, x: -24 }} transition={{ duration: isReducedMotion ? 0 : 0.3, ease: "easeOut" }}>
-              <button type="button" onClick={() => setSelectedCertificate(certificate)} className="group relative grid w-full gap-4 overflow-hidden rounded-[24px] border border-cyan-300/15 bg-white/[0.04] p-3 text-left backdrop-blur-xl shadow-[0_0_40px_rgba(34,211,238,0.08)] transition hover:border-cyan-300/35 hover:shadow-[0_0_45px_rgba(34,211,238,0.14)] focus:outline-none focus:ring-2 focus:ring-cyan-300/70 sm:p-4 md:grid-cols-[minmax(0,1.05fr)_minmax(260px,0.95fr)] md:gap-6 md:rounded-[28px] md:p-5 lg:p-6">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(163,230,53,0.08),transparent_38%)]" />
-                <div className="relative flex min-h-[180px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-black/25 p-3 sm:min-h-[240px] md:min-h-[300px] md:p-5">
-                  {failedImages.has(certificate._id) ? <HiOutlinePhoto className="text-6xl text-cyan-300/50" /> : <img src={certificate.image} alt={certificate.title} loading={activeIndex === 0 ? "eager" : "lazy"} onError={() => markImageAsFailed(certificate._id)} className="max-h-[42vh] w-full object-contain transition duration-500 group-hover:scale-[1.02]" />}
-                </div>
-                <div className="relative flex flex-col justify-center py-1 md:py-3">
-                  <p className="text-[10px] uppercase tracking-[0.3em] text-cyan-300">Certificación {String(activeIndex + 1).padStart(2, "0")}</p>
-                  <h3 className="mt-3 break-words text-xl font-black uppercase leading-tight text-white sm:text-2xl md:text-3xl">{certificate.title}</h3>
-                  <p className="mt-3 text-sm font-semibold uppercase tracking-[0.15em] text-lime-400">{certificate.issuer}</p>
-                  {certificate.issueDate && <p className="mt-2 text-sm text-white/45">{formatIssueDate(certificate.issueDate)}</p>}
-                  <p className="mt-4 line-clamp-5 whitespace-pre-line text-sm leading-6 text-white/70 md:text-sm md:leading-7">{certificate.description}</p>
-                  <span className="mt-5 inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300 transition group-hover:gap-3">Ver certificado <HiOutlineArrowRight className="text-base" /></span>
-                </div>
-              </button>
-            </motion.div>
-          </AnimatePresence>
+          <div className="relative mx-auto mt-4 max-w-2xl px-1 text-center md:mt-5">
+            <div className="mb-4 flex items-center justify-center gap-5">
+              {hasNavigation && <button type="button" onClick={() => move(-1)} aria-label="Certificado anterior" title="Certificado anterior" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cyan-300/20 bg-white/5 text-cyan-300 transition hover:border-cyan-300/60 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"><HiOutlineArrowLeft className="text-xl" /></button>}
+              <div className="flex min-w-20 items-center justify-center gap-2 text-xs tabular-nums text-white/50"><HiOutlineAcademicCap className="text-lg text-lime-400" />{String(activeIndex + 1).padStart(2, "0")} / {String(certificates.length).padStart(2, "0")}</div>
+              {hasNavigation && <button type="button" onClick={() => move(1)} aria-label="Siguiente certificado" title="Siguiente certificado" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cyan-300/20 bg-white/5 text-cyan-300 transition hover:border-cyan-300/60 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"><HiOutlineArrowRight className="text-xl" /></button>}
+            </div>
+            <div className="grid min-h-40" aria-live={isPaused || isReducedMotion ? "polite" : "off"} aria-atomic="true">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div key={certificate._id} className="col-start-1 row-start-1 min-w-0"
+                  initial={{ opacity: 0, y: isReducedMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: isReducedMotion ? 0 : -8 }} transition={{ duration: isReducedMotion ? 0 : 0.22 }}>
+                  <h3 className="break-words text-lg font-semibold leading-snug text-white sm:text-xl md:text-2xl">{certificate.title}</h3>
+                  <p className="mt-2 break-words text-xs font-semibold text-lime-400 sm:text-sm">{certificate.issuer}</p>
+                  <p className="mt-2 min-h-5 text-xs text-white/45">{formatIssueDate(certificate.issueDate)}</p>
+                  <p className="mt-3 min-h-12 line-clamp-2 whitespace-pre-line break-words text-sm leading-6 text-white/60">{certificate.description}</p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
 
-          {hasNavigation && <>
-            <button type="button" onClick={() => move(-1)} aria-label="Certificado anterior" className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-cyan-300/25 bg-[#0D0221]/85 p-2.5 text-cyan-300 shadow-lg transition hover:bg-cyan-300/10 focus:outline-none focus:ring-2 focus:ring-cyan-300/70 sm:left-4 md:left-6 md:p-3"><HiOutlineArrowLeft className="text-lg md:text-xl" /></button>
-            <button type="button" onClick={() => move(1)} aria-label="Siguiente certificado" className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-cyan-300/25 bg-[#0D0221]/85 p-2.5 text-cyan-300 shadow-lg transition hover:bg-cyan-300/10 focus:outline-none focus:ring-2 focus:ring-cyan-300/70 sm:right-4 md:right-6 md:p-3"><HiOutlineArrowRight className="text-lg md:text-xl" /></button>
-          </>}
+          {hasNavigation && <div className="mt-5 flex flex-wrap justify-center gap-1" aria-label="Seleccionar certificado">
+            {certificates.map((item, index) => <button key={item._id} type="button" onClick={() => selectIndex(index)}
+              aria-label={`Mostrar certificado ${index + 1}: ${item.title}`} aria-current={index === activeIndex ? "true" : undefined}
+              className="flex h-8 w-8 items-center justify-center rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+              <motion.span animate={{ width: index === activeIndex ? 24 : 8, backgroundColor: index === activeIndex ? "#67e8f9" : "#ffffff40" }}
+                transition={{ duration: isReducedMotion ? 0 : 0.25 }} className="block h-1 rounded-full" />
+            </button>)}
+          </div>}
         </div>
-
-        {hasNavigation && <div className="mt-4 flex justify-center gap-2" aria-label="Seleccionar certificado">
-          {certificates.map((item, index) => <button key={item._id} type="button" onClick={() => setActiveIndex(index)} aria-label={`Mostrar certificado ${index + 1}`} aria-current={index === activeIndex ? "true" : undefined} className={`h-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-cyan-300/70 ${index === activeIndex ? "w-8 bg-cyan-300" : "w-2 bg-white/25 hover:bg-white/50"}`} />)}
-        </div>}
       </div>
 
       <AnimatePresence>
